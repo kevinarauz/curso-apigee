@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Apigee Edge | Diseño Avanzado</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <style>
+        /*
+        ==========================================================================
+        STYLE GUIDE & DESIGN SYSTEM
+        ==========================================================================
+        * **Framework:** Bootstrap 5.3
+        * **Font:** 'Inter', sans-serif
+        * **Primary Color:** #0052D4 (Azul Eléctrico)
+        * **Secondary Color:** #6C757D (Gris Neutro)
+        * **Accent/Gradient:** Linear gradient from #0052D4 to #4364F7 to #6FB1FC
+        * **Layout:** Generous whitespace, responsive, mobile-first approach.
+        * **Components:** Soft shadows, subtle gradients, rounded corners (0.75rem).
+        * **Interactivity:** Smooth transitions, transform effects on hover, glowing effects.
+        * **Icons:** Bootstrap Icons (Font-based, integrated).
+        ==========================================================================
+        */
+
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #6c757d;
+            --background-light: #f8f9fa;
+            --background-dark: #1a1d24;
+            --text-light: #f8f9fa;
+            --text-dark: #212529;
+            --border-color: #dee2e6;
+            --card-bg: #ffffff;
+            --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --bs-border-radius: 0.75rem;
+        }
+
+        /* Progress indicator while scrolling */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #4364F7);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        body {
+            font-family: var(--font-family-sans-serif);
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- Global Component Styling --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .section-title {
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-title .bi {
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary-color) !important;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: #555 !important;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            margin: 0 2px;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: rgba(0, 82, 212, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 8rem 0;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 20% 80%, rgba(0, 82, 212, 0.3), transparent 40%),
+                              radial-gradient(circle at 80% 30%, rgba(67, 100, 247, 0.2), transparent 40%);
+            z-index: 1;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-light);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .hero .lead {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .hero .btn {
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary-gradient {
+            background: linear-gradient(90deg, var(--primary-color), #4364F7);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 82, 212, 0.4);
+        }
+        .btn-primary-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 82, 212, 0.5);
+        }
+        .btn-outline-light {
+            border-width: 2px;
+        }
+        .btn-outline-light:hover {
+            background-color: var(--text-light);
+            color: var(--background-dark);
+        }
+
+        /* --- Modern Cards --- */
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--bs-border-radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .module-card:hover::before {
+            left: 100%;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,82,212,0.15);
+        }
+        
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .module-number {
+            background: linear-gradient(135deg, var(--primary-color), #4364F7);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-right: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 82, 212, 0.3);
+        }
+        
+        .concept-box {
+            background-color: #e9ecef;
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        /* --- Feature Cards (Fundamentals Section) --- */
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--bs-border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(0, 82, 212, 0.1);
+        }
+        .feature-card .icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), #6FB1FC);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 82, 212, 0.2);
+            font-size: 1.5rem;
+        }
+
+        /* --- AI Assistant Section --- */
+        #asistente-ai .card {
+            background: var(--background-dark);
+            color: var(--text-light);
+            border: none;
+            overflow: hidden;
+        }
+        #asistente-ai .card::before {
+             content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(0, 82, 212, 0.5), transparent 70%);
+            animation: pulse 5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        #ai-concept-input {
+            background-color: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+        }
+        #ai-concept-input::placeholder { color: rgba(255,255,255,0.5); }
+        #ai-concept-input:focus {
+            background-color: rgba(255,255,255,0.15);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 82, 212, 0.5);
+        }
+
+        /* --- Code Blocks --- */
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            position: relative;
+            font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #333;
+            color: #ccc;
+            border: 1px solid #555;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            background-color: #444;
+            color: white;
+        }
+        .copy-btn.copied {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .xml-tag { color: #569cd6; }
+        .xml-attribute { color: #9cdcfe; }
+        .xml-value { color: #ce9178; }
+        .xml-comment { color: #6a9955; }
+
+        /* --- Modals --- */
+        .modal-content {
+            border: none;
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.1);
+        }
+        .modal-header {
+            background: linear-gradient(90deg, var(--primary-color), #4364F7);
+            color: white;
+            border-bottom: none;
+        }
+        .modal-title { color: white; }
+        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--background-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+        .footer h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .footer .list-unstyled li {
+            margin-bottom: 0.5rem;
+        }
+        .footer hr {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* --- Utility Classes --- */
+        .bg-light-blue {
+            background-color: #e7f0ff;
+        }
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        .section-separator {
+            margin: 6rem 0;
+        }
+
+        /* --- Search Functionality --- */
+        .search-container {
+            position: relative;
+        }
+        
+        .search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .search-result-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-result-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .search-result-context {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        /* --- Dark Theme --- */
+        [data-theme="dark"] {
+            --background-light: #1a1d24;
+            --background-dark: #000000;
+            --text-light: #ffffff;
+            --text-dark: #f8f9fa;
+            --border-color: #333;
+            --card-bg: #2d3339;
+        }
+        
+        [data-theme="dark"] body {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+        }
+        
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 29, 36, 0.8) !important;
+        }
+        
+        [data-theme="dark"] .navbar.scrolled {
+            background: rgba(26, 29, 36, 0.95) !important;
+        }
+        
+        [data-theme="dark"] .module-card,
+        [data-theme="dark"] .feature-card,
+        [data-theme="dark"] .card {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-dark);
+        }
+        
+        [data-theme="dark"] .search-dropdown {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        
+        [data-theme="dark"] .search-result-item:hover {
+            background-color: #3a3f46;
+        }
+
+        /* --- Dark Theme Extensions for Module Content --- */
+        [data-theme="dark"] .concept-box {
+            background-color: #2a2d33;
+            border-left-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .bg-light-blue {
+            background-color: #2a3441 !important;
+        }
+
+        [data-theme="dark"] .list-group-item {
+            background-color: transparent !important;
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .accordion-item {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .accordion-button {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .accordion-button:not(.collapsed) {
+            background-color: #3a3f46;
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .accordion-body {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .border {
+            border-color: var(--border-color) !important;
+        }
+
+        [data-theme="dark"] .rounded {
+            background-color: var(--card-bg) !important;
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] pre {
+            background-color: #1e1e1e !important;
+            border-color: var(--border-color);
+        }
+
+        /* --- Dark Theme for AI Modal --- */
+        [data-theme="dark"] .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .modal-header {
+            background: linear-gradient(90deg, var(--primary-color), #4364F7);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .modal-body {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .modal-footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .alert-primary {
+            background-color: rgba(0, 82, 212, 0.15);
+            border-color: rgba(0, 82, 212, 0.3);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .alert-warning {
+            background-color: rgba(255, 193, 7, 0.15);
+            border-color: rgba(255, 193, 7, 0.3);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .alert-info {
+            background-color: rgba(13, 202, 240, 0.15);
+            border-color: rgba(13, 202, 240, 0.3);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .bg-light {
+            background-color: #3a3f46 !important;
+            color: var(--text-dark) !important;
+        }
+
+        [data-theme="dark"] .card.bg-light {
+            background-color: #3a3f46 !important;
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .bg-dark {
+            background-color: #1e1e1e !important;
+            color: #d4d4d4 !important;
+        }
+
+        [data-theme="dark"] .text-muted {
+            color: #888 !important;
+        }
+
+        [data-theme="dark"] .text-success {
+            color: #28a745 !important;
+        }
+
+        [data-theme="dark"] .text-info {
+            color: #17a2b8 !important;
+        }
+
+        [data-theme="dark"] .list-unstyled li {
+            color: var(--text-dark);
+        }
+
+        /* --- Enhanced AI Modal Styling --- */
+        .ai-modal-icon {
+            background: linear-gradient(135deg, var(--primary-color), #6FB1FC);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 82, 212, 0.3);
+        }
+
+        .ai-definition-box {
+            background: linear-gradient(135deg, rgba(0, 82, 212, 0.1), rgba(111, 177, 252, 0.05));
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        [data-theme="dark"] .ai-definition-box {
+            background: linear-gradient(135deg, rgba(0, 82, 212, 0.2), rgba(111, 177, 252, 0.1));
+            border-left-color: var(--primary-color);
+        }
+
+        .ai-analogy-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .ai-analogy-box {
+            background: linear-gradient(135deg, #3a3f46, #2d3339);
+            border-color: var(--border-color);
+        }
+
+        .ai-analogy-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .ai-analogy-box:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-benefit-item {
+            transition: all 0.2s ease;
+            padding: 8px 0;
+            border-radius: 6px;
+        }
+
+        .ai-benefit-item:hover {
+            background-color: rgba(0, 82, 212, 0.05);
+            padding-left: 10px;
+        }
+
+        [data-theme="dark"] .ai-benefit-item:hover {
+            background-color: rgba(0, 82, 212, 0.1);
+        }
+
+        .ai-example-box {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-example-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), #6FB1FC);
+        }
+
+        .ai-xml-context {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+        }
+
+        [data-theme="dark"] .ai-xml-context {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.08));
+            border-color: rgba(255, 193, 7, 0.4);
+        }
+
+        /* --- Dark Theme Modal Footer Border --- */
+        [data-theme="dark"] .ai-modal-footer {
+            border-top-color: var(--border-color) !important;
+        }
+
+        /* --- Print Styles --- */
+        @media print {
+            .navbar,
+            .scroll-progress,
+            #theme-toggle,
+            .btn,
+            .search-container,
+            .hero .btn,
+            #asistente-ai,
+            .footer {
+                display: none !important;
+            }
+            
+            body {
+                font-size: 12pt;
+                line-height: 1.4;
+                color: black !important;
+                background: white !important;
+            }
+            
+            .hero {
+                background: white !important;
+                color: black !important;
+                padding: 2rem 0 !important;
+            }
+            
+            .hero h1 {
+                color: black !important;
+                font-size: 24pt !important;
+            }
+            
+            .module-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 1rem;
+                border: 1px solid #ddd;
+                box-shadow: none !important;
+            }
+            
+            .section-separator {
+                margin: 2rem 0;
+                border-color: #ddd;
+            }
+            
+            pre {
+                background: #f5f5f5 !important;
+                color: black !important;
+                border: 1px solid #ddd;
+                font-size: 10pt;
+            }
+            
+            .copy-btn {
+                display: none !important;
+            }
+        }
+
+        /* --- Enhanced Accessibility --- */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #003399;
+                --background-light: #ffffff;
+                --text-dark: #000000;
+                --border-color: #333333;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .scroll-progress {
+                transition: none !important;
+            }
+        }
+
+        /* --- Enhanced Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 60vh;
+                padding: 4rem 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-section .lead {
+                font-size: 1.1rem;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .module-number {
+                align-self: flex-start;
+            }
+            
+            .container-fluid {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+            }
+            
+            .search-container {
+                width: 100% !important;
+                margin-bottom: 0.5rem;
+            }
+            
+            #global-search {
+                width: 100% !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .module-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .btn {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+            }
+            
+            .search-container {
+                margin: 0.5rem 0;
+            }
+        }
+
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-main" data-bs-offset="100">
+    
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- Barra de Navegación -->
+    <nav id="navbar-main" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-box-seam-fill me-2"></i> Apigee Training
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <div class="search-container me-3">
+                            <input type="text" id="global-search" class="form-control form-control-sm" placeholder="Buscar en el manual..." style="width: 200px;">
+                            <div id="search-results" class="search-dropdown"></div>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#fundamentos">Fundamentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#asistente-ai">Asistente AI</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="modulosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-list-ul me-1"></i> Módulos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="modulosDropdown">
+                            <li><a class="dropdown-item" href="#creacion"><i class="bi bi-plus-circle me-2"></i> Módulo 1: Creación</a></li>
+                            <li><a class="dropdown-item" href="#componentes"><i class="bi bi-gear me-2"></i> Módulo 2: Componentes</a></li>
+                            <li><a class="dropdown-item" href="#estructura"><i class="bi bi-diagram-3 me-2"></i> Módulo 3: Estructura</a></li>
+                            <li><a class="dropdown-item" href="#publicacion"><i class="bi bi-share me-2"></i> Módulo 4: Publicación</a></li>
+                             <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#referencia-rapida"><i class="bi bi-bookmark-star me-2"></i> Referencia Rápida</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary btn-sm ms-2" id="theme-toggle" title="Cambiar tema">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary btn-sm ms-2" onclick="showPrintDialog()" title="Imprimir manual">
+                            <i class="bi bi-printer-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero -->
+    <header id="inicio" class="hero">
+        <div class="container text-center">
+             <h1 class="display-3 fw-bold text-white mb-4 animate__animated animate__fadeInDown">
+                <i class="bi bi-book-half me-2"></i> Manual Completo de 
+                <span style="color: #ffc107;">Apigee Edge</span>
+            </h1>
+            <div class="mb-4 animate__animated animate__fadeInUp animate__delay-500ms">
+                <p class="mb-2 text-white-50">
+                    <i class="bi bi-person-workspace me-2"></i>Diseñado y desarrollado por
+                </p>
+                <h4 class="fw-bold text-white mb-1">Kevin Araúz</h4>
+                <p class="text-white-50 mb-0">
+                    <i class="bi bi-award me-2"></i>Arquitecto de Soluciones
+                </p>
+            </div>
+            <p class="lead mb-5 mx-auto animate__animated animate__fadeInUp" style="max-width: 700px;">
+                Guía técnica completa para el personal: desde fundamentos hasta implementación avanzada. Ideal para capacitación, consulta rápida y referencia diaria.
+            </p>
+            <div class="d-flex justify-content-center gap-3 animate__animated animate__fadeInUp animate__delay-1s">
+                <a href="#fundamentos" class="btn btn-primary-gradient">
+                    <i class="bi bi-rocket-takeoff-fill me-2"></i> Iniciar Manual
+                </a>
+                <a href="#" class="btn btn-outline-light" onclick="downloadPDF()">
+                    <i class="bi bi-download me-2"></i> Descargar PDF
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5 py-5">
+
+        <!-- Sección Fundamentos -->
+        <section id="fundamentos">
+            <h2 class="section-title"><i class="bi bi-journal-bookmark-fill"></i>Módulo 0: Fundamentos de Apigee</h2>
+            <p class="lead text-center mb-5" style="max-width: 800px; margin: 0 auto;">Apigee es una plataforma de gestión de APIs que actúa como una fachada inteligente para tus servicios de backend. Piensa en ello como el conserje de un hotel de lujo para tus datos.</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="icon"><i class="bi bi-shield-check"></i></div>
+                        <h5 class="card-title fw-bold">Seguridad</h5>
+                        <p class="card-text small">Protege tus APIs con OAuth, API Keys y políticas contra amenazas, actuando como el guardia de seguridad.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="icon"><i class="bi bi-cone-striped"></i></div>
+                        <h5 class="card-title fw-bold">Control de Tráfico</h5>
+                        <p class="card-text small">Gestiona el flujo con cuotas y límites para evitar la saturación, como un controlador de tráfico aéreo.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="icon"><i class="bi bi-bar-chart-line-fill"></i></div>
+                        <h5 class="card-title fw-bold">Análisis</h5>
+                        <p class="card-text small">Obtén visibilidad del uso y rendimiento de tus APIs para tomar decisiones informadas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="icon"><i class="bi bi-people-fill"></i></div>
+                        <h5 class="card-title fw-bold">Gestión de Devs</h5>
+                        <p class="card-text small">Facilita la adopción de tus APIs con portales de desarrolladores y documentación clara.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Asistente AI -->
+        <section id="asistente-ai">
+             <div class="card p-4 p-md-5">
+                <div class="card-body text-center">
+                    <i class="bi bi-robot mb-3" style="font-size: 4rem; color: #6FB1FC;"></i>
+                    <h2 class="card-title mb-3 text-white">Asistente de Conceptos AI</h2>
+                    <p class="card-text text-white-50 mx-auto" style="max-width: 600px;">¿Atascado en un término? Ingresa cualquier concepto de Apigee y obtén una explicación clara y concisa al instante.</p>
+                    
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-lg-8">
+                             <div class="input-group mb-3">
+                                <span class="input-group-text bg-dark border-secondary text-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control form-control-lg" id="ai-concept-input" placeholder="Ej: ¿Qué es un API Proxy?">
+                            </div>
+                             <div class="mb-4">
+                                <small class="d-block mb-2 text-white-50">O intenta con estos ejemplos:</small>
+                                <div class="d-flex flex-wrap justify-content-center gap-2">
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('API Proxy')">API Proxy</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Reverse Proxy')">Reverse Proxy</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('API Products')">API Products</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Developer Apps')">Developer Apps</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('KVM')">KVM</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Target Servers')">Target Servers</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Shared Flow')">Shared Flow</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('OAS')">OAS</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Virtual Host')">Virtual Host</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary-gradient btn-lg" id="ai-assistant-btn" onclick="handleAsistenteClick()">
+                                <span id="ai-btn-text"><i class="bi bi-stars me-2"></i> Explicar Concepto</span>
+                                <span id="ai-btn-spinner" class="spinner-border spinner-border-sm d-none ms-2" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Módulo 1: Creación -->
+        <section id="creacion">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">1</div>
+                    <h2 class="m-0">Creando tu Primer API Proxy</h2>
+                </div>
+                
+                <div class="concept-box">
+                    <h4><i class="bi bi-lightbulb-fill text-primary me-2"></i>Concepto Clave: ¿Qué es un API Proxy?</h4>
+                    <p>Un <strong>API Proxy</strong> es el componente fundamental en Apigee. No es el servicio de backend en sí, sino una <strong>fachada o una "puerta de entrada" digital</strong> que se coloca frente a tus servicios existentes. Actúa como un intermediario que desacopla la interfaz que expones a los desarrolladores (el frontend del API) de tu implementación de backend.</p>
+                    <p>Piénsalo como el recepcionista de un hotel: los huéspedes (desarrolladores) interactúan con el recepcionista, no directamente con las habitaciones (servicios de backend). El recepcionista gestiona el acceso, proporciona información y asegura que todo funcione sin problemas. De manera similar, el API Proxy te permite añadir seguridad, transformar datos y monitorear el tráfico sin tocar tu código original.</p>
+                </div>
+
+                <div class="p-4 rounded bg-light-blue mt-4">
+                    <h5 class="fw-bold"><i class="bi bi-signpost-split-fill me-2 text-primary"></i>Pasos Clave para la Creación</h5>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item border-0 bg-transparent"><strong>Acceso y Navegación:</strong> Ingresa a Apigee y navega a <code>API Proxies > + API Proxy</code>.</li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Tipo de Proxy:</strong> Selecciona <strong>"Reverse Proxy"</strong>, el más común para empezar.
+                            <div class="concept-box mt-2 p-3">
+                                <h6><i class="bi bi-info-circle-fill text-primary me-2"></i>¿Qué es un Reverse Proxy?</h6>
+                                <p class="small mb-0">Es un tipo de servidor que se sienta frente a los servidores web/aplicaciones y reenvía las solicitudes de los clientes a esos servidores. Para el cliente, el reverse proxy parece ser el servidor de origen. Es el patrón más común en Apigee porque permite centralizar la gestión y la seguridad de múltiples servicios de backend.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent"><strong>Definición de Detalles:</strong> Asigna un nombre (<code>users-api-v1</code>), una ruta base (<code>/v1/users</code>) y la URL de tu backend.</li>
+                        <li class="list-group-item border-0 bg-transparent"><strong>Despliegue:</strong> Elige el ambiente (ej. 'test') y despliega. ¡Tu proxy está vivo!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="section-separator">
+
+        <!-- Módulo 2: Componentes Clave -->
+        <section id="componentes">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">2</div>
+                    <h2 class="m-0">Ecosistema y Componentes Clave</h2>
+                </div>
+                <p class="lead">Un proxy no opera de forma aislada. Apigee provee un ecosistema de componentes reutilizables para centralizar la configuración y la lógica.</p>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="icon"><i class="bi bi-arrows-collapse"></i></div>
+                            <h5 class="card-title fw-bold">Shared Flows</h5>
+                            <p class="card-text small">Secuencias de políticas reutilizables (ej. seguridad). Se definen una vez y se "enganchan" a múltiples proxies.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="icon"><i class="bi bi-file-earmark-code"></i></div>
+                            <h5 class="card-title fw-bold">OAS</h5>
+                            <p class="card-text small">El "contrato" de tu API (OpenAPI Specification) para validar que las solicitudes cumplan con la estructura definida.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="icon"><i class="bi bi-key-fill"></i></div>
+                            <h5 class="card-title fw-bold">KVMs</h5>
+                            <p class="card-text small">Key-Value Maps para almacenar datos de configuración (URLs, credenciales) fuera del código del proxy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="icon"><i class="bi bi-server"></i></div>
+                            <h5 class="card-title fw-bold">Target Servers</h5>
+                            <p class="card-text small">Abstracción para desacoplar la URL del backend del código, permitiendo configuración por ambiente.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="icon"><i class="bi bi-hdd-network-fill"></i></div>
+                            <h5 class="card-title fw-bold">Virtual Hosts</h5>
+                            <p class="card-text small">Definen el punto de entrada (dominio y puerto) por donde se accederá a los proxies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Módulo 3: Estructura -->
+        <section id="estructura">
+             <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">3</div>
+                    <h2 class="m-0">Anatomía de un API Proxy</h2>
+                </div>
+                <p class="lead">La lógica de un proxy se construye con <strong>Endpoints</strong>, que a su vez contienen <strong>Flows</strong> (flujos) y <strong>Policies</strong> (políticas).</p>
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100">
+                            <h5 class="fw-bold"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i>Proxy Endpoint</h5>
+                            <p>La cara pública de tu API. Define cómo se reciben las solicitudes de los clientes. Aquí aplicas seguridad, validación de cuotas y lógica inicial.</p>
+                        </div>
+                    </div>
+                     <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100">
+                            <h5 class="fw-bold"><i class="bi bi-bullseye me-2 text-primary"></i>Target Endpoint</h5>
+                            <p>La conexión con tu servicio de backend. Define cómo se realizan las llamadas al destino, se manejan las respuestas y se transforman los datos antes de devolverlos.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Glosario de Términos XML -->
+                <div class="mt-5">
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-book-fill me-2"></i>Glosario de Términos del XML</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-arrow-right-circle me-2"></i>PreFlow, PostFlow, Flows</h6>
+                                        <p class="small mb-0">Son los contenedores de la lógica. <strong>PreFlow</strong> se ejecuta siempre al inicio. <strong>Flows</strong> se ejecutan si su condición se cumple. <strong>PostFlow</strong> se ejecuta siempre al final.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-play-circle me-2"></i>Step</h6>
+                                        <p class="small mb-0">Es un paso dentro de un flujo. Generalmente, contiene una política (<code>&lt;Name&gt;</code>) para ser ejecutada.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-exclamation-triangle me-2"></i>FaultRules</h6>
+                                        <p class="small mb-0">Define un conjunto de pasos a seguir cuando ocurre un error específico, permitiendo un manejo de errores personalizado.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-arrow-left-right me-2"></i>Request / Response</h6>
+                                        <p class="small mb-0">Indican si los pasos dentro de un flujo se aplican a la solicitud entrante (<strong>Request</strong>) o a la respuesta saliente (<strong>Response</strong>).</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-question-circle me-2"></i>Condition</h6>
+                                        <p class="small mb-0">Una expresión lógica que determina si un Flow (o un Step) debe ejecutarse. Por ejemplo, <code>(request.verb = "GET")</code>.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-globe me-2"></i>HTTPProxyConnection</h6>
+                                        <p class="small mb-0">Define la interfaz pública del proxy, incluyendo el <code>BasePath</code> y el <code>VirtualHost</code>.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-signpost me-2"></i>RouteRule</h6>
+                                        <p class="small mb-0">Conecta el ProxyEndpoint con un TargetEndpoint específico. Puede tener condiciones para enrutar a diferentes backends.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-hdd-network me-2"></i>HTTPTargetConnection</h6>
+                                        <p class="small mb-0">Define la conexión con el servicio de backend, ya sea a través de una URL directa o un <code>LoadBalancer</code>.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-diagram-3 me-2"></i>LoadBalancer / Server</h6>
+                                        <p class="small mb-0">Permite balancear la carga entre múltiples instancias de backend, haciendo referencia a <strong>TargetServers</strong> preconfigurados.</p>
+                                    </div>
+                                    
+                                    <div class="term-item mb-4">
+                                        <h6 class="fw-bold text-primary"><i class="bi bi-folder me-2"></i>Path</h6>
+                                        <p class="small mb-0">La ruta específica del servicio en el backend que se añadirá a la URL del TargetServer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5 class="fw-bold text-center my-4">Análisis del Código XML</h5>
+                    <div class="accordion" id="accordionXml">
+                        <!-- XML Proxy Endpoint -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingProxy">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProxy" aria-expanded="true" aria-controls="collapseProxy">
+                                    <strong>XML del ProxyEndpoint: <code>default.xml</code></strong>
+                                </button>
+                            </h2>
+                            <div id="collapseProxy" class="accordion-collapse collapse show" aria-labelledby="headingProxy" data-bs-parent="#accordionXml">
+                                <div class="accordion-body">
+                                    <p>A continuación se detalla el XML que define el comportamiento del Proxy Endpoint. Observa cómo se organizan los <code>&lt;Step&gt;</code> (que adjuntan una Política) dentro de los flujos <code>PreFlow</code>, <code>PostFlow</code> y <code>Flows</code> condicionales.</p>
+                                    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code><span class="xml-comment">&lt;!-- 
+    El ProxyEndpoint define la interfaz pública del API.
+    Maneja la lógica de cara al cliente.
+--&gt;</span>
+<span class="xml-tag">&lt;ProxyEndpoint</span> <span class="xml-attribute">name=</span><span class="xml-value">"default"</span><span class="xml-tag">&gt;</span>
+    <span class="xml-tag">&lt;Description/&gt;</span>
+    <span class="xml-tag">&lt;FaultRules&gt;</span>
+        <span class="xml-comment">&lt;!-- Manejo de errores genéricos en el flujo del proxy --&gt;</span>
+        <span class="xml-tag">&lt;FaultRule</span> <span class="xml-attribute">name=</span><span class="xml-value">"SimpleError"</span><span class="xml-tag">&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-failure-rules<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-log-builder<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+        <span class="xml-tag">&lt;/FaultRule&gt;</span>
+    <span class="xml-tag">&lt;/FaultRules&gt;</span>
+    <span class="xml-tag">&lt;PreFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PreFlow"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-comment">&lt;!-- Se ejecuta para CADA solicitud entrante --&gt;</span>
+        <span class="xml-tag">&lt;Request&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-uuid-time-generator<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Genera un ID único --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-oauth-security<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Valida el token OAuth --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>KVM-Debtmanagement<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Carga valores de un KVM --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>q-debtmanagement-quota<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Aplica la cuota de uso --&gt;</span>
+        <span class="xml-tag">&lt;/Request&gt;</span>
+        <span class="xml-tag">&lt;Response/&gt;</span>
+    <span class="xml-tag">&lt;/PreFlow&gt;</span>
+    <span class="xml-tag">&lt;PostFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PostFlow"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-comment">&lt;!-- Se ejecuta para CADA respuesta saliente --&gt;</span>
+        <span class="xml-tag">&lt;Response&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-log-builder<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+        <span class="xml-tag">&lt;/Response&gt;</span>
+    <span class="xml-tag">&lt;/PostFlow&gt;</span>
+    <span class="xml-tag">&lt;Flows&gt;</span>
+        <span class="xml-comment">&lt;!-- Flujo condicional para una operación específica --&gt;</span>
+        <span class="xml-tag">&lt;Flow</span> <span class="xml-attribute">name=</span><span class="xml-value">"debt"</span><span class="xml-tag">&gt;</span>
+            <span class="xml-tag">&lt;Request&gt;</span>
+                <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>oas-validation<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Valida contra la especificación OpenAPI --&gt;</span>
+            <span class="xml-tag">&lt;/Request&gt;</span>
+            <span class="xml-tag">&lt;Response/&gt;</span>
+            <span class="xml-tag">&lt;Condition&gt;</span>(proxy.pathsuffix MatchesPath "/debt/{id}") and (request.verb = "GET")<span class="xml-tag">&lt;/Condition&gt;</span>
+        <span class="xml-tag">&lt;/Flow&gt;</span>
+    <span class="xml-tag">&lt;/Flows&gt;</span>
+    <span class="xml-tag">&lt;HTTPProxyConnection&gt;</span>
+        <span class="xml-tag">&lt;BasePath&gt;</span>/debtmanagement/v1<span class="xml-tag">&lt;/BasePath&gt;</span>
+        <span class="xml-tag">&lt;VirtualHost&gt;</span>VHost-Secure<span class="xml-tag">&lt;/VirtualHost&gt;</span> <span class="xml-comment">&lt;!-- Define el host y puerto de escucha --&gt;</span>
+    <span class="xml-tag">&lt;/HTTPProxyConnection&gt;</span>
+    <span class="xml-tag">&lt;RouteRule</span> <span class="xml-attribute">name=</span><span class="xml-value">"default"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-comment">&lt;!-- Envia la solicitud al TargetEndpoint llamado 'default' --&gt;</span>
+        <span class="xml-tag">&lt;TargetEndpoint&gt;</span>default<span class="xml-tag">&lt;/TargetEndpoint&gt;</span>
+    <span class="xml-tag">&lt;/RouteRule&gt;</span>
+<span class="xml-tag">&lt;/ProxyEndpoint&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- XML Target Endpoint -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTarget">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTarget" aria-expanded="false" aria-controls="collapseTarget">
+                                    <strong>XML del TargetEndpoint: <code>default.xml</code></strong>
+                                </button>
+                            </h2>
+                            <div id="collapseTarget" class="accordion-collapse collapse" aria-labelledby="headingTarget" data-bs-parent="#accordionXml">
+                                <div class="accordion-body">
+                                    <p>Este es el XML del Target Endpoint. Su función es comunicarse con el servicio de backend. Define cómo manejar las respuestas y los errores que provienen del servidor de destino.</p>
+                                    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code><span class="xml-comment">&lt;!-- 
+    El TargetEndpoint define la conexión con el servicio backend.
+    Maneja la lógica de cara al servidor de destino.
+--&gt;</span>
+<span class="xml-tag">&lt;TargetEndpoint</span> <span class="xml-attribute">name=</span><span class="xml-value">"default"</span><span class="xml-tag">&gt;</span>
+    <span class="xml-tag">&lt;Description/&gt;</span>
+    <span class="xml-tag">&lt;FaultRules&gt;</span>
+        <span class="xml-comment">&lt;!-- Manejo de errores específicos del backend --&gt;</span>
+        <span class="xml-tag">&lt;FaultRule</span> <span class="xml-attribute">name=</span><span class="xml-value">"SimpleErrorHandler"</span><span class="xml-tag">&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-handle-backend-error<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-log-builder<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+        <span class="xml-tag">&lt;/FaultRule&gt;</span>
+    <span class="xml-tag">&lt;/FaultRules&gt;</span>
+    <span class="xml-tag">&lt;PreFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PreFlow"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-tag">&lt;Request/&gt;</span>
+        <span class="xml-tag">&lt;Response&gt;</span>
+            <span class="xml-comment">&lt;!-- Políticas aplicadas a la respuesta del backend --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>add-cors<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Agrega cabeceras CORS --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>am-set-date-header<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Agrega una cabecera de fecha --&gt;</span>
+        <span class="xml-tag">&lt;/Response&gt;</span>
+    <span class="xml-tag">&lt;/PreFlow&gt;</span>
+    <span class="xml-tag">&lt;PostFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PostFlow"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-tag">&lt;Request/&gt;</span>
+        <span class="xml-tag">&lt;Response&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-log-builder<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span>
+        <span class="xml-tag">&lt;/Response&gt;</span>
+    <span class="xml-tag">&lt;/PostFlow&gt;</span>
+    <span class="xml-tag">&lt;HTTPTargetConnection&gt;</span>
+        <span class="xml-comment">&lt;!-- Define la conexión al backend, puede usar un balanceador de carga --&gt;</span>
+        <span class="xml-tag">&lt;LoadBalancer&gt;</span>
+            <span class="xml-tag">&lt;Server</span> <span class="xml-attribute">name=</span><span class="xml-value">"ts-debtmanagement"</span><span class="xml-tag">/&gt;</span> <span class="xml-comment">&lt;!-- Referencia a un TargetServer configurado --&gt;</span>
+        <span class="xml-tag">&lt;/LoadBalancer&gt;</span>
+        <span class="xml-tag">&lt;Path&gt;</span>/debtmanagement/v1<span class="xml-tag">&lt;/Path&gt;</span> <span class="xml-comment">&lt;!-- Ruta específica del servicio en el backend --&gt;</span>
+    <span class="xml-tag">&lt;/HTTPTargetConnection&gt;</span>
+<span class="xml-tag">&lt;/TargetEndpoint&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Módulo 4: Publicación y Consumo -->
+        <section id="publicacion">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">4</div>
+                    <h2 class="m-0">Ciclo de Vida: Publicación y Consumo</h2>
+                </div>
+                <p class="lead">Una vez que un proxy es funcional, se debe controlar quién puede usarlo y cómo. Para esto, Apigee usa dos conceptos clave: <strong>API Products</strong> y <strong>Developer Apps</strong>.</p>
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100">
+                            <h5 class="fw-bold"><i class="bi bi-box2-fill me-2 text-primary"></i>API Products</h5>
+                            <p>Piénsalo como un "plan de suscripción". Es un paquete que contiene uno o más API proxies, junto con reglas de acceso (ej. cuota de 100 llamadas por minuto). Creas diferentes productos para diferentes tipos de consumidores.</p>
+                        </div>
+                    </div>
+                     <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100">
+                            <h5 class="fw-bold"><i class="bi bi-app-indicator me-2 text-primary"></i>Developer Apps</h5>
+                            <p>Representan a la aplicación cliente. Cuando un desarrollador registra su app, se le da acceso a uno o más "API Products" y se generan las credenciales (Consumer Key & Secret) para autenticarse.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-success mt-4">
+                    <i class="bi bi-diagram-3-fill me-2"></i>
+                    <strong>En resumen:</strong> Las <strong>Apps</strong> se suscriben a los <strong>Productos</strong> para poder consumir los <strong>Proxies</strong> que estos contienen.
+                </div>
+            </div>
+        </section>
+        
+        <hr class="section-separator">
+
+        <!-- Sección de Referencia Rápida -->
+        <section id="referencia-rapida">
+            <h2 class="section-title"><i class="bi bi-bookmark-star-fill"></i>Referencia Rápida</h2>
+            <p class="lead text-center mb-5" style="max-width: 800px; margin: 0 auto;">Una "cheat sheet" con los comandos, políticas y mejores prácticas más importantes para el día a día.</p>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-terminal-fill me-2"></i>Comandos y URLs</h5></div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Management API <code>https://api.enterprise.apigee.com</code></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Edge UI <code>https://enterprise.apigee.com</code></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Trace Session <span class="badge bg-primary rounded-pill">Develop → Trace</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-shield-shaded me-2"></i>Políticas Comunes</h5></div>
+                        <div class="card-body">
+                             <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Verify API Key <span class="badge bg-success rounded-pill">Seguridad</span></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Quota <span class="badge bg-warning rounded-pill">Tráfico</span></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Spike Arrest <span class="badge bg-warning rounded-pill">Tráfico</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-tools me-2"></i>Troubleshooting</h5></div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Error 401:</strong> Verificar API Key / OAuth Token.</li>
+                                <li class="list-group-item"><strong>Error 429:</strong> Revisar políticas de Quota / Spike Arrest.</li>
+                                <li class="list-group-item"><strong>Error 500:</strong> Problema en el Target Server. Usar Trace.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-gem me-2"></i>Buenas Prácticas</h5></div>
+                        <div class="card-body">
+                           <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Usar versionado en las rutas base (ej. /v1, /v2).</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Externalizar URLs en Target Servers.</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Usar Shared Flows para lógica común.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal para respuesta de AI -->
+    <div class="modal fade" id="aiResponseModal" tabindex="-1" aria-labelledby="aiResponseModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aiResponseModalLabel"><i class="bi bi-robot me-2"></i>Explicación del Asistente AI</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body" id="ai-response-content" style="min-height: 200px;">
+            <!-- Contenido dinámico aquí -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5><i class="bi bi-box-seam-fill me-2"></i> Apigee Training</h5>
+                    <p class="small">Herramienta de formación interna para dominar la gestión de APIs.</p>
+                </div>
+                <div class="col-md-2 offset-md-2 mb-4 mb-md-0">
+                    <h5>Navegación</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#fundamentos">Fundamentos</a></li>
+                        <li><a href="#creacion">Módulos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Recursos</h5>
+                     <ul class="list-unstyled">
+                        <li><a href="https://docs.apigee.com" target="_blank">Documentación Oficial</a></li>
+                        <li><a href="https://community.apigee.com" target="_blank">Comunidad de Apigee</a></li>
+                        <li><a href="#" onclick="downloadCheatSheet()">Descargar Cheat Sheet</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center small">
+                <p>&copy; 2025 Portal de Capacitación. Diseñado y desarrollado por <strong>Kevin Arauz</strong>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Enhanced search functionality
+        function initializeSearch() {
+            const searchInput = document.getElementById('global-search');
+            const searchResults = document.getElementById('search-results');
+            
+            if (!searchInput || !searchResults) return;
+            
+            const searchableContent = [
+                { title: 'API Proxy', content: 'fachada digital intermediario backend', section: 'creacion' },
+                { title: 'Policy', content: 'bloque construcción modular seguridad transformación', section: 'estructura' },
+                { title: 'KVM', content: 'key value map configuración externa diccionario', section: 'componentes' },
+                { title: 'Shared Flow', content: 'flujo compartido reutilizable políticas comunes', section: 'componentes' },
+                { title: 'Target Server', content: 'abstracción backend URL ambiente configuración', section: 'componentes' },
+                { title: 'Virtual Host', content: 'punto entrada dominio puerto certificado SSL', section: 'componentes' },
+                { title: 'Proxy Endpoint', content: 'cara pública cliente solicitudes seguridad cuotas', section: 'estructura' },
+                { title: 'Target Endpoint', content: 'conexión backend servicios respuestas errores', section: 'estructura' },
+                { title: 'API Products', content: 'plan suscripción paquete proxies reglas acceso', section: 'publicacion' },
+                { title: 'Developer Apps', content: 'aplicación cliente credenciales consumer key secret', section: 'publicacion' },
+                { title: 'OAuth', content: 'autenticación autorización token seguridad', section: 'fundamentos' },
+                { title: 'Analytics', content: 'análisis métricas uso rendimiento datos', section: 'fundamentos' }
+            ];
+            
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.toLowerCase().trim();
+                
+                if (query.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+                
+                searchTimeout = setTimeout(() => {
+                    const matches = searchableContent.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.content.toLowerCase().includes(query)
+                    ).slice(0, 5);
+                    
+                    if (matches.length > 0) {
+                        searchResults.innerHTML = matches.map(match => 
+                            `<div class="search-result-item" onclick="navigateToSection('${match.section}')">
+                                <div class="search-result-title">${match.title}</div>
+                                <div class="search-result-context">Encontrado en ${getSectionName(match.section)}</div>
+                            </div>`
+                        ).join('');
+                        searchResults.style.display = 'block';
+                    } else {
+                        searchResults.innerHTML = '<div class="search-result-item">No se encontraron resultados</div>';
+                        searchResults.style.display = 'block';
+                    }
+                }, 300);
+            });
+            
+            // Hide search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        }
+        
+        function getSectionName(sectionId) {
+            const sectionNames = {
+                'fundamentos': 'Fundamentos',
+                'creacion': 'Módulo 1: Creación',
+                'componentes': 'Módulo 2: Componentes',
+                'estructura': 'Módulo 3: Estructura',
+                'publicacion': 'Módulo 4: Publicación',
+                'referencia-rapida': 'Referencia Rápida'
+            };
+            return sectionNames[sectionId] || 'Manual';
+        }
+        
+        function navigateToSection(sectionId) {
+            document.getElementById('search-results').style.display = 'none';
+            document.getElementById('global-search').value = '';
+            smoothScrollToSection(sectionId);
+        }
+
+        // Smooth scroll function
+        function smoothScrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = section.offsetTop - navbarHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        }
+
+        // Theme toggle functionality
+        function initializeThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (!themeToggle) return;
+            
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            if (currentTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                this.innerHTML = newTheme === 'dark' ? 
+                    '<i class="bi bi-sun-fill"></i>' : 
+                    '<i class="bi bi-moon-fill"></i>';
+            });
+        }
+
+        // Print functionality
+        function showPrintDialog() {
+            // Hide interactive elements before printing
+            const elementsToHide = document.querySelectorAll('.navbar, .scroll-progress, #theme-toggle, .btn, .search-container, #asistente-ai');
+            elementsToHide.forEach(el => el.style.display = 'none');
+            
+            window.print();
+            
+            // Restore elements after printing
+            setTimeout(() => {
+                elementsToHide.forEach(el => el.style.display = '');
+            }, 1000);
+        }
+
+        // Enhanced keyboard navigation
+        function initializeKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + K for search focus
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    const searchInput = document.getElementById('global-search');
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+                }
+                
+                // Escape to close search results
+                if (e.key === 'Escape') {
+                    document.getElementById('search-results').style.display = 'none';
+                }
+                
+                // Ctrl/Cmd + P for print
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    showPrintDialog();
+                }
+            });
+        }
+
+        // Reading progress and estimated time
+        function initializeReadingProgress() {
+            const totalWords = document.body.innerText.split(/\s+/).length;
+            const avgWordsPerMinute = 200;
+            const estimatedTime = Math.ceil(totalWords / avgWordsPerMinute);
+            
+            // Add reading time indicator
+            const heroSection = document.querySelector('.hero .lead');
+            if (heroSection) {
+                const readingTime = document.createElement('small');
+                readingTime.className = 'text-white-50 d-block mt-2';
+                readingTime.innerHTML = `<i class="bi bi-clock me-1"></i> Tiempo estimado de lectura: ${estimatedTime} minutos`;
+                heroSection.parentNode.insertBefore(readingTime, heroSection.nextSibling);
+            }
+        }
+
+        // --- Globally Scoped Functions for onclick handlers ---
+        function downloadPDF() {
+            alert('Función de descarga PDF en desarrollo. Use la opción de imprimir (Ctrl+P) y seleccione "Guardar como PDF".');
+        }
+
+        function downloadTextFile(filename, content) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function downloadCheatSheet() {
+            const cheatSheetContent = `
+APIGEE EDGE - CHEAT SHEET RÁPIDO
+================================
+
+COMANDOS FRECUENTES:
+- Management API: https://api.enterprise.apigee.com
+- Edge UI: https://enterprise.apigee.com
+- Crear Proxy: APIs → +API Proxy
+- Deploy: Deployment → Deploy
+- Debug: Develop → Trace
+
+POLÍTICAS MÁS USADAS:
+- OAuth v2.0 (Autenticación)
+- Verify API Key (Validación de clave)
+- Quota (Límites de uso)
+- Spike Arrest (Control de tráfico)
+- CORS (Cross-Origin)
+- JSON to XML (Transformación)
+
+TROUBLESHOOTING:
+- Error 401: Verificar API Key/OAuth
+- Error 429: Revisar Quota/Rate Limit
+- Error 500: Verificar Target Endpoint
+- Timeout: Ajustar timeout policies
+
+BUENAS PRÁCTICAS:
+✓ Siempre usar versionado en APIs
+✓ Implementar rate limiting
+✓ Usar políticas de cache apropiadas
+✓ Monitorear analytics regularmente
+✓ Documentar todas las APIs
+
+© 2025 Manual de Capacitación Apigee Edge - Kevin Arauz
+            `.trim();
+            downloadTextFile('apigee-cheat-sheet.txt', cheatSheetContent);
+        }
+
+        // Function to copy code from <pre> blocks
+        function copyCode(button) {
+            const pre = button.closest('pre');
+            const code = pre.querySelector('code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                button.innerHTML = '<i class="bi bi-check-lg"></i> Copiado';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = 'Copiar';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                button.innerText = 'Error';
+            });
+        }
+
+        // Modal instance for the AI assistant
+        const aiModal = new bootstrap.Modal(document.getElementById('aiResponseModal'));
+        
+        function setExampleQuery(concept) {
+            const input = document.getElementById('ai-concept-input');
+            input.value = concept;
+            input.focus();
+        }
+
+        // Async function to handle the AI assistant click event
+        async function handleAsistenteClick() {
+            const input = document.getElementById('ai-concept-input');
+            const concept = input.value.trim();
+            if (!concept) {
+                alert('Por favor, ingresa un concepto.');
+                return;
+            }
+
+            const button = document.getElementById('ai-assistant-btn');
+            const buttonText = document.getElementById('ai-btn-text');
+            const spinner = document.getElementById('ai-btn-spinner');
+            const responseContainer = document.getElementById('ai-response-content');
+
+            // Set loading state
+            button.disabled = true;
+            buttonText.textContent = 'Pensando...';
+            spinner.classList.remove('d-none');
+            responseContainer.innerHTML = `<div class="d-flex justify-content-center align-items-center h-100"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>`;
+            aiModal.show();
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Enhanced explanations with context from the XML glossary
+                const explanations = {
+                    'api proxy': {
+                        title: 'API Proxy',
+                        icon: 'bi-box-seam',
+                        definition: 'Es una fachada digital inteligente que actúa como intermediario entre los desarrolladores y tus servicios de backend.',
+                        analogy: '🏨 <strong>Analogía:</strong> Como el recepcionista de un hotel de lujo - los huéspedes (desarrolladores) interactúan con él, no directamente con las habitaciones (servicios backend). El recepcionista gestiona el acceso, proporciona información y asegura que todo funcione sin problemas.',
+                        benefits: ['Seguridad centralizada', 'Transformación de datos', 'Monitoreo y analytics', 'Control de tráfico', 'Versionado sin cambiar backend'],
+                        example: 'Un API Proxy puede transformar respuestas XML a JSON, aplicar autenticación OAuth y limitar a 1000 llamadas por hora, todo sin tocar tu servicio original.',
+                        xmlContext: 'En el XML se define como <ProxyEndpoint> que maneja la interfaz pública del API.'
+                    },
+                    'reverse proxy': {
+                        title: 'Reverse Proxy',
+                        icon: 'bi-arrow-left-right',
+                        definition: 'Un servidor que se posiciona frente a servidores web/aplicaciones y reenvía las solicitudes de los clientes a esos servidores.',
+                        analogy: '🎭 <strong>Analogía:</strong> Como un portero de discoteca VIP - para los clientes, él es la cara visible del establecimiento, pero internamente gestiona el acceso a múltiples áreas y servicios.',
+                        benefits: ['Balanceo de carga', 'Caché de respuestas', 'Terminación SSL', 'Compresión', 'Ocultación de infraestructura'],
+                        example: 'En Apigee, cuando creas un "Reverse Proxy", estás exponiendo una URL pública (/v1/users) que internamente puede conectar con https://backend.empresa.com/api/usuarios.',
+                        xmlContext: 'Se configura mediante <HTTPProxyConnection> y <HTTPTargetConnection> en el XML.'
+                    },
+                    'preflow': {
+                        title: 'PreFlow',
+                        icon: 'bi-arrow-right-circle',
+                        definition: 'Contenedor de lógica que se ejecuta SIEMPRE al inicio de cada solicitud, antes de cualquier flujo condicional.',
+                        analogy: '🚦 <strong>Analogía:</strong> Como el control de seguridad del aeropuerto - todos los pasajeros DEBEN pasar por ahí, sin excepciones, antes de acceder a las puertas de embarque.',
+                        benefits: ['Lógica universal', 'Seguridad garantizada', 'Inicialización', 'Logging consistente'],
+                        example: 'En PreFlow pones: generación de UUID, validación OAuth, carga de KVM, aplicación de cuotas. Se ejecuta para TODAS las solicitudes.',
+                        xmlContext: 'Se define como <PreFlow> en tanto ProxyEndpoint como TargetEndpoint. Contiene <Request> y <Response> con sus respectivos <Step>s.'
+                    },
+                    'postflow': {
+                        title: 'PostFlow',
+                        icon: 'bi-arrow-left-circle',
+                        definition: 'Contenedor de lógica que se ejecuta SIEMPRE al final, después de todos los flujos, antes de enviar la respuesta al cliente.',
+                        analogy: '📤 <strong>Analogía:</strong> Como el departamento de envíos - sin importar qué producto compraste, todos pasan por empaquetado, etiquetado y registro antes de salir.',
+                        benefits: ['Transformación final', 'Headers estándar', 'Logging completo', 'Limpieza de datos'],
+                        example: 'En PostFlow pones: agregado de headers CORS, logging de respuesta, transformación final de formato, medición de tiempos de respuesta.',
+                        xmlContext: 'Se define como <PostFlow> y típicamente contiene <Response> con Steps de finalización como logging.'
+                    },
+                    'flows': {
+                        title: 'Flows (Flujos Condicionales)',
+                        icon: 'bi-diagram-2',
+                        definition: 'Contenedores de lógica que se ejecutan SOLO si su condición específica se cumple (path, método HTTP, headers, etc.).',
+                        analogy: '🎯 <strong>Analogía:</strong> Como carriles especializados en una autopista - el carril de camiones solo para vehículos pesados, el carril rápido solo para autos.',
+                        benefits: ['Lógica específica', 'Optimización', 'Diferentes validaciones', 'Routing inteligente'],
+                        example: 'Flow "GetUsers": Condition (request.verb = "GET" AND proxy.pathsuffix = "/users"). Solo ejecuta validación de paginación y cache.',
+                        xmlContext: 'Se define dentro de <Flows> con elementos <Flow name="..."> que incluyen <Condition> para determinar cuándo ejecutarse.'
+                    },
+                    'step': {
+                        title: 'Step (Paso)',
+                        icon: 'bi-play-circle',
+                        definition: 'Es una unidad de ejecución dentro de un flujo que generalmente contiene una política específica para ser ejecutada.',
+                        analogy: '⚙️ <strong>Analogía:</strong> Como los pasos de una receta de cocina - cada Step es una instrucción específica (añadir sal, mezclar, hornear) que se ejecuta en orden.',
+                        benefits: ['Granularidad', 'Orden de ejecución', 'Condicionalidad', 'Reutilización'],
+                        example: '<Step><Name>oauth-validation</Name></Step> ejecuta la política "oauth-validation". Puedes tener múltiples Steps en secuencia.',
+                        xmlContext: 'Se define como <Step><Name>nombre-política</Name></Step> dentro de <Request> o <Response> en cualquier flujo.'
+                    },
+                    'faultrules': {
+                        title: 'FaultRules',
+                        icon: 'bi-exclamation-triangle',
+                        definition: 'Define un conjunto de pasos a seguir cuando ocurre un error específico, permitiendo un manejo de errores personalizado.',
+                        analogy: '🚨 <strong>Analogía:</strong> Como los protocolos de emergencia - si hay un incendio (error 500), sigues el plan A; si hay una alarma (error 401), sigues el plan B.',
+                        benefits: ['Manejo graceful de errores', 'Respuestas personalizadas', 'Logging de errores', 'Recuperación automática'],
+                        example: 'FaultRule para error 401: ejecuta log de seguridad + respuesta JSON estándar. FaultRule para timeout: reintenta una vez + notifica.',
+                        xmlContext: 'Se define como <FaultRules><FaultRule name="..."> con Steps específicos para cada tipo de error.'
+                    },
+                    'condition': {
+                        title: 'Condition (Condición)',
+                        icon: 'bi-question-circle',
+                        definition: 'Una expresión lógica que determina si un Flow, Step o FaultRule debe ejecutarse basándose en variables del request.',
+                        analogy: '🔍 <strong>Analogía:</strong> Como las reglas de acceso a un club nocturno - "solo mayores de 21" o "solo con invitación". La condición decide quién entra.',
+                        benefits: ['Ejecución condicional', 'Optimización', 'Routing inteligente', 'Personalización'],
+                        example: '(request.verb = "GET" AND proxy.pathsuffix MatchesPath "/users/{id}") - solo para GET a URLs como /users/123.',
+                        xmlContext: 'Se define como <Condition>expresión_lógica</Condition> dentro de Flows para determinar cuándo ejecutar la lógica.'
+                    },
+                    'httproxyconnection': {
+                        title: 'HTTPProxyConnection',
+                        icon: 'bi-globe',
+                        definition: 'Define la interfaz pública del proxy, incluyendo el BasePath (ruta base) y el VirtualHost (punto de entrada).',
+                        analogy: '🏪 <strong>Analogía:</strong> Como la dirección y horario de una tienda - defines en qué calle está (BasePath), en qué edificio (VirtualHost).',
+                        benefits: ['Punto de entrada claro', 'Organización de URLs', 'Configuración de host', 'Separación de ambientes'],
+                        example: '<BasePath>/api/v1/users</BasePath> + <VirtualHost>secure</VirtualHost> = https://api.empresa.com/api/v1/users',
+                        xmlContext: 'Se define dentro del <ProxyEndpoint> con <BasePath> y <VirtualHost> para configurar el acceso público.'
+                    },
+                    'routerule': {
+                        title: 'RouteRule',
+                        icon: 'bi-signpost',
+                        definition: 'Conecta el ProxyEndpoint con un TargetEndpoint específico. Puede tener condiciones para enrutar a diferentes backends.',
+                        analogy: '🧭 <strong>Analogía:</strong> Como un GPS inteligente - dependiendo del tráfico (condiciones), te envía por diferentes rutas (TargetEndpoints).',
+                        benefits: ['Routing dinámico', 'Balanceo de carga', 'Failover', 'A/B testing'],
+                        example: 'Ruta por defecto va a "backend-prod". Si header "version=beta", va a "backend-beta".',
+                        xmlContext: 'Se define como <RouteRule><TargetEndpoint>nombre</TargetEndpoint></RouteRule> al final del ProxyEndpoint.'
+                    },
+                    'httptargetconnection': {
+                        title: 'HTTPTargetConnection',
+                        icon: 'bi-hdd-network',
+                        definition: 'Define la conexión con el servicio de backend, ya sea a través de una URL directa o un LoadBalancer.',
+                        analogy: '📞 <strong>Analogía:</strong> Como la información de contacto en tu agenda - puede ser un número directo o un número principal con extensiones.',
+                        benefits: ['Abstracción de backend', 'Balanceo de carga', 'Configuración flexible', 'Timeouts personalizados'],
+                        example: 'URL directa: <URL>https://backend.com/api</URL> o LoadBalancer: <Server name="backend-1"/>',
+                        xmlContext: 'Se define dentro del <TargetEndpoint> con <URL> directa o <LoadBalancer> con múltiples <Server>.'
+                    },
+                    'loadbalancer': {
+                        title: 'LoadBalancer / Server',
+                        icon: 'bi-diagram-3',
+                        definition: 'Permite balancear la carga entre múltiples instancias de backend, haciendo referencia a TargetServers preconfigurados.',
+                        analogy: '⚖️ <strong>Analogía:</strong> Como un maître en un restaurante - distribuye a los clientes entre las mesas disponibles para optimizar la atención.',
+                        benefits: ['Alta disponibilidad', 'Distribución de carga', 'Failover automático', 'Escalabilidad'],
+                        example: '<LoadBalancer><Server name="backend-server-1"/><Server name="backend-server-2"/></LoadBalancer>',
+                        xmlContext: 'Se define dentro de <HTTPTargetConnection> con referencias a TargetServers configurados previamente.'
+                    },
+                    'path': {
+                        title: 'Path',
+                        icon: 'bi-folder',
+                        definition: 'La ruta específica del servicio en el backend que se añadirá a la URL del TargetServer.',
+                        analogy: '🗺️ <strong>Analogía:</strong> Como las direcciones específicas dentro de un edificio - el edificio es el TargetServer, el Path es "piso 3, oficina 301".',
+                        benefits: ['Especificidad de endpoint', 'Organización clara', 'Ruteo preciso', 'Separación de servicios'],
+                        example: 'TargetServer: "https://backend.com" + Path: "/api/v2/users" = llamada final a "https://backend.com/api/v2/users"',
+                        xmlContext: 'Se define como <Path>/ruta/específica</Path> dentro de <HTTPTargetConnection> para completar la URL de destino.'
+                    },
+                    // Conceptos adicionales del manual
+                    'api products': {
+                        title: 'API Products',
+                        icon: 'bi-box2',
+                        definition: 'Son "planes de suscripción" que empaquetan uno o más API proxies junto con reglas de acceso específicas.',
+                        analogy: '📱 <strong>Analogía:</strong> Como los planes de telefonía móvil - tienes el plan "Básico" (100 llamadas/día), "Premium" (1000 llamadas/día).',
+                        benefits: ['Monetización por niveles', 'Control granular de acceso', 'Segmentación de desarrolladores', 'Políticas diferenciadas'],
+                        example: 'Producto "Free Tier": incluye APIs de consulta con 100 calls/hora. Producto "Business": incluye APIs + escritura con 10,000 calls/hora.',
+                        xmlContext: 'No se definen en XML de proxy, sino en la configuración de Apigee Management para gestionar el acceso.'
+                    },
+                    'developer apps': {
+                        title: 'Developer Apps',
+                        icon: 'bi-app-indicator',
+                        definition: 'Representan aplicaciones cliente registradas que consumen tus APIs a través de credenciales específicas.',
+                        analogy: '🎫 <strong>Analogía:</strong> Como un pase de acceso a un parque temático - cada app tiene su entrada única que le da acceso a ciertas atracciones.',
+                        benefits: ['Trazabilidad por aplicación', 'Credenciales únicas', 'Analytics separados', 'Revocación individual'],
+                        example: 'App "MiMovil-iOS" obtiene Consumer Key "abc123" para acceder al producto "Premium".',
+                        xmlContext: 'Las credenciales se validan en el proxy mediante políticas como VerifyAPIKey que referencia estas apps.'
+                    },
+                    'kvm': {
+                        title: 'Key-Value Maps (KVM)',
+                        icon: 'bi-key',
+                        definition: 'Almacenes de configuración que permiten externalizar datos como URLs, credenciales y parámetros fuera del código del proxy.',
+                        analogy: '🗂️ <strong>Analogía:</strong> Como un archivo de configuración compartido - tienes un "diccionario" central que todos consultan.',
+                        benefits: ['Configuración sin redespliegue', 'Separación por ambiente', 'Seguridad para credenciales', 'Mantenimiento centralizado'],
+                        example: 'KVM "URLs-Prod": backend_url = "https://api.prod.com", timeout = "30000". Todos los proxies consultan estos valores.',
+                        xmlContext: 'Se accede mediante políticas KeyValueMapOperations en Steps del proxy: <Step><Name>KVM-Debtmanagement</Name></Step>'
+                    },
+                    'target servers': {
+                        title: 'Target Servers',
+                        icon: 'bi-server',
+                        definition: 'Abstracciones que desacoplan las URLs de backend del código, permitiendo diferentes configuraciones por ambiente.',
+                        analogy: '🏷️ <strong>Analogía:</strong> Como etiquetas de contacto - en lugar de recordar números, tienes "Casa", "Oficina". Cambias el número sin cambiar dónde la usas.',
+                        benefits: ['Despliegue multi-ambiente', 'Cambios sin código', 'Balanceo de carga', 'Failover automático'],
+                        example: 'Target Server "backend-api": En dev apunta a "dev.empresa.com", en prod a "api.empresa.com".',
+                        xmlContext: 'Se referencia en <LoadBalancer><Server name="ts-debtmanagement"/></LoadBalancer> dentro del TargetEndpoint.'
+                    },
+                    'shared flow': {
+                        title: 'Shared Flows',
+                        icon: 'bi-arrows-collapse',
+                        definition: 'Secuencias de políticas reutilizables que se definen una vez y se pueden "enganchar" a múltiples proxies.',
+                        analogy: '🧩 <strong>Analogía:</strong> Como plantillas corporativas - creas una vez el formato estándar y lo reutilizas en todas las presentaciones.',
+                        benefits: ['Reutilización de lógica', 'Mantenimiento centralizado', 'Consistencia', 'Versioning independiente'],
+                        example: 'Shared Flow "SecurityFlow": OAuth + Rate Limiting + Logging. Lo adjuntas a 20 proxies diferentes.',
+                        xmlContext: 'Se invoca mediante política FlowCallout: <Step><Name>Invoke-SecurityFlow</Name></Step> en cualquier flujo del proxy.'
+                    },
+                    'oas': {
+                        title: 'OpenAPI Specification (OAS)',
+                        icon: 'bi-file-earmark-code',
+                        definition: 'El "contrato" de tu API que define estructura, endpoints, parámetros y validaciones usando estándares JSON/YAML.',
+                        analogy: '📋 <strong>Analogía:</strong> Como el manual de instrucciones - especifica exactamente qué puedes hacer, qué parámetros necesitas y qué respuestas esperar.',
+                        benefits: ['Validación automática', 'Documentación viva', 'Generación de código', 'Testing automatizado'],
+                        example: 'OAS define que POST /users requiere {name: string, email: string}, retorna 201 con {id: number}.',
+                        xmlContext: 'Se valida mediante política OpenAPISpecification: <Step><Name>oas-validation</Name></Step> en flows específicos.'
+                    },
+                    'virtual host': {
+                        title: 'Virtual Hosts',
+                        icon: 'bi-hdd-network',
+                        definition: 'Define el punto de entrada (dominio y puerto) por donde se accederá a los proxies, incluyendo configuración SSL.',
+                        analogy: '🚪 <strong>Analogía:</strong> Como las diferentes entradas de un edificio - tienes la entrada principal (HTTPS), la de empleados (HTTP interno).',
+                        benefits: ['Múltiples dominios', 'Configuración SSL', 'Routing por host', 'Separación de tráfico'],
+                        example: 'VHost "api-secure": api.empresa.com:443 con SSL. VHost "internal": internal.empresa.com:8080 sin SSL.',
+                        xmlContext: 'Se referencia en <VirtualHost>VHost-Secure</VirtualHost> dentro de <HTTPProxyConnection> del ProxyEndpoint.'
+                    }
+                };
+                
+                // Enhanced search logic
+                const normalizedConcept = concept.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+                let explanation = null;
+                
+                // Direct match
+                if (explanations[normalizedConcept]) {
+                    explanation = explanations[normalizedConcept];
+                } else {
+                    // Partial match
+                    for (const [key, value] of Object.entries(explanations)) {
+                        if (normalizedConcept.includes(key) || key.includes(normalizedConcept)) {
+                            explanation = value;
+                            break;
+                        }
+                    }
+                }
+                
+                if (explanation) {
+                    responseContainer.innerHTML = `
+                        <div class="d-flex align-items-start mb-4">
+                            <div class="me-3">
+                                <div class="ai-modal-icon">
+                                    <i class="bi ${explanation.icon}" style="font-size: 1.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h4 class="fw-bold text-primary mb-3">${explanation.title}</h4>
+                                <div class="ai-definition-box p-3">
+                                    <h6 class="fw-bold mb-2"><i class="bi bi-lightbulb me-2"></i>Definición</h6>
+                                    <p class="mb-0">${explanation.definition}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="ai-analogy-box p-3">
+                                <p class="mb-0">${explanation.analogy}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success mb-3"><i class="bi bi-check-circle me-2"></i>Beneficios Clave</h6>
+                                <ul class="list-unstyled">
+                                    ${explanation.benefits.map(benefit => `<li class="ai-benefit-item mb-1"><i class="bi bi-arrow-right text-success me-2"></i>${benefit}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-info mb-3"><i class="bi bi-code-square me-2"></i>Ejemplo Práctico</h6>
+                                <div class="ai-example-box p-3">
+                                    <small class="text-light">${explanation.example}</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${explanation.xmlContext ? `
+                        <div class="mb-4">
+                            <div class="ai-xml-context p-3">
+                                <h6 class="fw-bold mb-2"><i class="bi bi-file-earmark-code me-2"></i>Contexto en XML</h6>
+                                <p class="mb-0">${explanation.xmlContext}</p>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="text-center mt-4 pt-3 ai-modal-footer" style="border-top: 1px solid rgba(0,0,0,0.1);">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                ¿Necesitas más detalles? Consulta los módulos correspondientes en el manual o busca en la documentación oficial de Apigee.
+                            </small>
+                        </div>
+                    `;
+                } else {
+                    responseContainer.innerHTML = `
+                        <div class="text-center py-4">
+                            <div class="ai-modal-icon mx-auto mb-4">
+                                <i class="bi bi-search" style="font-size: 1.5rem;"></i>
+                            </div>
+                            <h5 class="fw-bold mb-3">Término no encontrado</h5>
+                            <p class="text-muted mb-4">Lo siento, no tengo una explicación para "<strong>${concept}</strong>" en mi base de conocimientos actual.</p>
+                            <div class="ai-definition-box p-3">
+                                <h6 class="fw-bold mb-2"><i class="bi bi-lightbulb me-2"></i>Sugerencias:</h6>
+                                <ul class="list-unstyled text-start mb-0">
+                                    <li class="ai-benefit-item mb-2"><i class="bi bi-arrow-right text-info me-2"></i>Intenta con términos como: API Proxy, PreFlow, PostFlow, Flows, Step</li>
+                                    <li class="ai-benefit-item mb-2"><i class="bi bi-arrow-right text-info me-2"></i>Revisa el glosario XML en el Módulo 3</li>
+                                    <li class="ai-benefit-item mb-0"><i class="bi bi-arrow-right text-info me-2"></i>Consulta la documentación oficial de Apigee</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                responseContainer.innerHTML = `<div class="alert alert-danger">Ocurrió un error al procesar tu solicitud.</div>`;
+                console.error(error);
+            } finally {
+                // Reset button state
+                button.disabled = false;
+                buttonText.innerHTML = '<i class="bi bi-stars me-2"></i> Explicar Concepto';
+                spinner.classList.add('d-none');
+            }
+        }
+
+        // --- Initialization code that runs after the DOM is fully loaded ---
+        window.onload = function() {
+            const scrollProgress = document.getElementById('scroll-progress');
+            const navbar = document.getElementById('navbar-main');
+
+            // Initialize all enhanced features
+            initializeSearch();
+            initializeThemeToggle();
+            initializeKeyboardNavigation();
+            initializeReadingProgress();
+
+            // Function to update scroll progress bar
+            function updateScrollProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                if(scrollProgress) {
+                    scrollProgress.style.width = scrollPercent + '%';
+                }
+            }
+
+            // Function to handle navbar style on scroll
+            function handleNavScroll() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            
+            // Attach scroll event listeners
+            window.addEventListener('scroll', () => {
+                updateScrollProgress();
+                handleNavScroll();
+            });
+
+            // Set up smooth scrolling for all anchor links
+            document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Service Worker for offline functionality (basic) - Optional
+            if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+                // Only register service worker on HTTPS and if supported
+                try {
+                    navigator.serviceWorker.register('sw.js').catch(() => {
+                        // Silently fail if sw.js doesn't exist - that's ok
+                        console.log('Service Worker not available - manual works fine without it');
+                    });
+                } catch (error) {
+                    // Ignore service worker errors - the manual works perfectly without it
+                    console.log('Service Worker not supported - manual works fine without it');
+                }
+            }
+        };
+    </script>
+</body>
+</html>
