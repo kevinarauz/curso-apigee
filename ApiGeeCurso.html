@@ -1338,6 +1338,85 @@
                     <p>Piénsalo como el recepcionista de un hotel: los huéspedes (desarrolladores) interactúan con el recepcionista, no directamente con las habitaciones (servicios de backend). El recepcionista gestiona el acceso, proporciona información y asegura que todo funcione sin problemas. De manera similar, el API Proxy te permite añadir seguridad, transformar datos y monitorear el tráfico sin tocar tu código original.</p>
                 </div>
 
+                <!-- Definición Técnica Completa -->
+                <div class="mt-4 p-4 bg-light rounded border">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-info-circle-fill text-primary me-2"></i>¿Qué es un Proxy de API en Profundidad?</h5>
+                    <p class="mb-3">Para exponer las API en Apigee Edge, debe implementar <strong>proxies de API</strong>. Los proxies de API separan la API orientada a la aplicación de sus servicios de backend, lo que protege a esas aplicaciones de los cambios en el código de backend. Aunque haga cambios de backend en sus servicios, las aplicaciones seguirán llamando a la misma API sin ninguna interrupción.</p>
+                    
+                    <p class="mb-3">En una configuración de proxy de API, hay <strong>dos tipos de extremos fundamentales</strong>:</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-white">
+                                <h6 class="fw-bold text-primary mb-2"><i class="bi bi-arrow-right-circle-fill me-2"></i>ProxyEndpoint</h6>
+                                <p class="small mb-0">Define la manera en que las apps cliente consumen tus API. Configura el ProxyEndpoint para definir la URL de tu proxy de API y determina si las apps acceden al proxy mediante HTTP o HTTPS. Aquí se aplican políticas de seguridad, verificaciones de cuotas y controles de acceso.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-white">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-arrow-left-circle-fill me-2"></i>TargetEndpoint</h6>
+                                <p class="small mb-0">Define la forma en que el proxy de API interactúa con tus servicios de backend. Configura el TargetEndpoint para reenviar solicitudes al servicio backend adecuado, incluyendo configuración de seguridad, protocolos y información de conexión.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Visualización de Proxies -->
+                <div class="mt-4">
+                    <div class="strategic-recommendation p-4">
+                        <h5 class="mb-3"><i class="bi bi-eye-fill text-primary me-2"></i>Visualización de los Proxies de API</h5>
+                        
+                        <p class="mb-3">Antes de crear tu primer proxy, es importante entender visualmente cómo funciona la arquitectura. Puedes visualizar los proxies de API como se muestra en el diagrama arquitectónico de referencia:</p>
+                        
+                        <!-- Imagen del Modelo Arquitectónico -->
+                        <div class="text-center mb-4">
+                            <img src="img/ApigeeProxyModel_v1.png" 
+                                 alt="Diagrama del Modelo de API Proxy en Apigee Edge mostrando el flujo desde Cliente HTTP hasta Servicio Backend" 
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-width: 100%; height: auto; border: 1px solid var(--border-color);">
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <strong>Figura 1:</strong> Modelo arquitectónico del API Proxy mostrando el flujo completo: Cliente HTTP → ProxyEndpoint → TargetEndpoint → Servicio Backend
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded">
+                                    <i class="bi bi-phone-fill fs-2 text-primary mb-2"></i>
+                                    <h6 class="text-primary">Cliente HTTP</h6>
+                                    <small class="text-muted">Aplicación móvil, web, o sistema que consume la API</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded bg-light">
+                                    <i class="bi bi-shield-fill-check fs-2 text-success mb-2"></i>
+                                    <h6 class="text-success">API Proxy en Edge</h6>
+                                    <small class="text-muted">Punto de entrada que gestiona seguridad, transformaciones y enrutamiento</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded">
+                                    <i class="bi bi-cloud-fill fs-2 text-info mb-2"></i>
+                                    <h6 class="text-info">Servicio HTTP</h6>
+                                    <small class="text-muted">Tu servicio backend real donde reside la lógica de negocio</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mb-0">
+                            <h6 class="text-primary"><i class="bi bi-diagram-2-fill me-2"></i>Flujo de Comunicación</h6>
+                            <p class="mb-2">El modelo <strong>ApigeeProxyModel_v1</strong> ilustra perfectamente esta separación de responsabilidades:</p>
+                            <ul class="mb-0 small">
+                                <li><strong>Request:</strong> Cliente → ProxyEndpoint (seguridad, validación) → TargetEndpoint (transformación) → Backend</li>
+                                <li><strong>Response:</strong> Backend → TargetEndpoint (formato) → ProxyEndpoint (headers, cache) → Cliente</li>
+                                <li><strong>Beneficio clave:</strong> Los cambios en backend no afectan a los clientes gracias a la capa de abstracción del proxy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="p-4 rounded bg-light-blue mt-4">
                     <h5 class="fw-bold"><i class="bi bi-signpost-split-fill me-2 text-primary"></i>Pasos para Creación en Apigee Edge Clásico</h5>
                     <ol class="list-group list-group-numbered">
@@ -1692,62 +1771,6 @@
 <span class="xml-tag">&lt;/TargetEndpoint&gt;</span></code></pre>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Sección de Visualización de Proxies -->
-                <div class="mt-5">
-                    <div class="strategic-recommendation p-4">
-                        <h5 class="mb-3"><i class="bi bi-eye-fill text-primary me-2"></i>Visualización de los Proxies de API</h5>
-                        
-                        <p class="mb-3">Puedes visualizar los proxies de API como se muestra en el diagrama arquitectónico de referencia. La arquitectura típica sigue este patrón:</p>
-                        
-                        <!-- Imagen del Modelo Arquitectónico -->
-                        <div class="text-center mb-4">
-                            <img src="img/ApigeeProxyModel_v1.png" 
-                                 alt="Diagrama del Modelo de API Proxy en Apigee Edge mostrando el flujo desde Cliente HTTP hasta Servicio Backend" 
-                                 class="img-fluid rounded shadow-sm"
-                                 style="max-width: 100%; height: auto; border: 1px solid var(--border-color);">
-                            <div class="mt-2">
-                                <small class="text-muted">
-                                    <strong>Figura 1:</strong> Modelo arquitectónico del API Proxy mostrando el flujo completo: Cliente HTTP → ProxyEndpoint → TargetEndpoint → Servicio Backend
-                                </small>
-                            </div>
-                        </div>
-                        
-                        <div class="row g-3 mb-4">
-                            <div class="col-lg-4">
-                                <div class="text-center p-3 border rounded">
-                                    <i class="bi bi-phone-fill fs-2 text-primary mb-2"></i>
-                                    <h6 class="text-primary">Cliente HTTP</h6>
-                                    <small class="text-muted">Aplicación móvil, web, o sistema que consume la API</small>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="text-center p-3 border rounded bg-light">
-                                    <i class="bi bi-shield-fill-check fs-2 text-success mb-2"></i>
-                                    <h6 class="text-success">API Proxy en Edge</h6>
-                                    <small class="text-muted">Punto de entrada que gestiona seguridad, transformaciones y enrutamiento</small>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="text-center p-3 border rounded">
-                                    <i class="bi bi-cloud-fill fs-2 text-info mb-2"></i>
-                                    <h6 class="text-info">Servicio HTTP</h6>
-                                    <small class="text-muted">Tu servicio backend real donde reside la lógica de negocio</small>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="alert alert-info mb-0">
-                            <h6 class="text-primary"><i class="bi bi-diagram-2-fill me-2"></i>Referencia Arquitectónica</h6>
-                            <p class="mb-2">El modelo <strong>ApigeeProxyModel_v1</strong> ilustra perfectamente esta separación de responsabilidades:</p>
-                            <ul class="mb-0 small">
-                                <li><strong>Request:</strong> Cliente → ProxyEndpoint (seguridad, validación) → TargetEndpoint (transformación) → Backend</li>
-                                <li><strong>Response:</strong> Backend → TargetEndpoint (formato) → ProxyEndpoint (headers, cache) → Cliente</li>
-                                <li><strong>Beneficio clave:</strong> Los cambios en backend no afectan a los clientes gracias a la capa de abstracción del proxy</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
