@@ -1408,18 +1408,79 @@
                     <div class="module-number">3</div>
                     <h2 class="m-0">Anatomía de un API Proxy</h2>
                 </div>
-                <p class="lead">La lógica de un proxy se construye con <strong>Endpoints</strong>, que a su vez contienen <strong>Flows</strong> (flujos) y <strong>Policies</strong> (políticas).</p>
+                
+                <!-- Definición mejorada de API Proxy -->
+                <div class="concept-box mb-4">
+                    <h4><i class="bi bi-info-circle-fill text-primary me-2"></i>¿Qué es un Proxy de API en profundidad?</h4>
+                    <p class="mb-3">Para exponer las API en Apigee Edge, debe implementar <strong>proxies de API</strong>. Los proxies de API separan la API orientada a la aplicación de sus servicios de backend, lo que protege a esas aplicaciones de los cambios en el código de backend. Aunque haga cambios de backend en sus servicios, las aplicaciones seguirán llamando a la misma API sin ninguna interrupción.</p>
+                    
+                    <div class="alert alert-info" role="alert">
+                        <h6 class="alert-heading"><i class="bi bi-lightbulb-fill me-2"></i>Analogía Práctica</h6>
+                        <p class="mb-0">Imagina el proxy como un <strong>traductor diplomático</strong> en una embajada: los visitantes (aplicaciones cliente) hablan con el traductor en su idioma, y este se comunica internamente con los funcionarios (servicios backend) en el idioma que ellos entienden. Si cambian los funcionarios o sus procedimientos, el traductor adapta la comunicación sin que los visitantes se den cuenta.</p>
+                    </div>
+                </div>
+
+                <p class="lead">En una configuración de proxy de API, hay <strong>dos tipos de extremos fundamentales</strong> que trabajan juntos para crear una experiencia fluida:</p>
+                
                 <div class="row g-4 mt-4">
                     <div class="col-lg-6">
                         <div class="p-4 border rounded h-100">
-                            <h5 class="fw-bold"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i>Proxy Endpoint</h5>
-                            <p>La cara pública de tu API. Define cómo se reciben las solicitudes de los clientes. Aquí aplicas seguridad, validación de cuotas y lógica inicial.</p>
+                            <h5 class="fw-bold"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i>ProxyEndpoint</h5>
+                            <p class="mb-3"><strong>Define la manera en que las apps cliente consumen tus API.</strong> Configura ProxyEndpoint para definir la URL de tu proxy de API. El extremo del proxy también determina si las apps acceden al proxy de API a través de HTTP o HTTPS.</p>
+                            <div class="small text-muted">
+                                <strong>Funciones clave:</strong>
+                                <ul class="mt-2">
+                                    <li>Aplica seguridad y autenticación</li>
+                                    <li>Verifica cuotas y límites de velocidad</li>
+                                    <li>Controla el acceso y valida entrada</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                      <div class="col-lg-6">
                         <div class="p-4 border rounded h-100">
-                            <h5 class="fw-bold"><i class="bi bi-bullseye me-2 text-primary"></i>Target Endpoint</h5>
-                            <p>La conexión con tu servicio de backend. Define cómo se realizan las llamadas al destino, se manejan las respuestas y se transforman los datos antes de devolverlos.</p>
+                            <h5 class="fw-bold"><i class="bi bi-bullseye me-2 text-primary"></i>TargetEndpoint</h5>
+                            <p class="mb-3"><strong>Define la forma en que el proxy de API interactúa con tus servicios de backend.</strong> Puedes configurar el extremo de destino para reenviar solicitudes al servicio de backend adecuado, incluida la definición de cualquier configuración de seguridad, protocolo HTTP o HTTPS, y otra información de conexión.</p>
+                            <div class="small text-muted">
+                                <strong>Funciones clave:</strong>
+                                <ul class="mt-2">
+                                    <li>Transforma respuestas para el formato correcto</li>
+                                    <li>Maneja conexiones y balanceo de carga</li>
+                                    <li>Aplica políticas de formato y datos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Diagrama conceptual -->
+                <div class="mt-5 p-4 bg-light-blue rounded">
+                    <h5 class="text-center mb-4"><i class="bi bi-diagram-3-fill text-primary me-2"></i>Flujo Visual del API Proxy</h5>
+                    <div class="text-center">
+                        <div class="d-inline-flex align-items-center mb-3">
+                            <div class="px-3 py-2 bg-white border rounded me-3">
+                                <i class="bi bi-phone-fill text-primary"></i><br>
+                                <small><strong>Cliente HTTP</strong></small>
+                            </div>
+                            <i class="bi bi-arrow-right text-primary fs-4 me-3"></i>
+                            <div class="px-3 py-2 bg-warning rounded me-3">
+                                <i class="bi bi-box-arrow-in-right"></i><br>
+                                <small><strong>ProxyEndpoint</strong></small>
+                            </div>
+                            <i class="bi bi-arrow-right text-primary fs-4 me-3"></i>
+                            <div class="px-3 py-2 bg-info text-white rounded me-3">
+                                <i class="bi bi-bullseye"></i><br>
+                                <small><strong>TargetEndpoint</strong></small>
+                            </div>
+                            <i class="bi bi-arrow-right text-primary fs-4 me-3"></i>
+                            <div class="px-3 py-2 bg-white border rounded">
+                                <i class="bi bi-cloud-fill text-primary"></i><br>
+                                <small><strong>Servicio Backend</strong></small>
+                            </div>
+                        </div>
+                        <div class="small text-muted">
+                            <strong>Request:</strong> Cliente → ProxyEndpoint → TargetEndpoint → Backend<br>
+                            <strong>Response:</strong> Backend → TargetEndpoint → ProxyEndpoint → Cliente
                         </div>
                     </div>
                 </div>
@@ -1601,6 +1662,49 @@
 <span class="xml-tag">&lt;/TargetEndpoint&gt;</span></code></pre>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección de Visualización de Proxies -->
+                <div class="mt-5">
+                    <div class="strategic-recommendation p-4">
+                        <h5 class="mb-3"><i class="bi bi-eye-fill text-primary me-2"></i>Visualización de los Proxies de API</h5>
+                        
+                        <p class="mb-3">Puedes visualizar los proxies de API como se muestra en el diagrama arquitectónico de referencia. La arquitectura típica sigue este patrón:</p>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded">
+                                    <i class="bi bi-phone-fill fs-2 text-primary mb-2"></i>
+                                    <h6 class="text-primary">Cliente HTTP</h6>
+                                    <small class="text-muted">Aplicación móvil, web, o sistema que consume la API</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded bg-light">
+                                    <i class="bi bi-shield-fill-check fs-2 text-success mb-2"></i>
+                                    <h6 class="text-success">API Proxy en Edge</h6>
+                                    <small class="text-muted">Punto de entrada que gestiona seguridad, transformaciones y enrutamiento</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-center p-3 border rounded">
+                                    <i class="bi bi-cloud-fill fs-2 text-info mb-2"></i>
+                                    <h6 class="text-info">Servicio HTTP</h6>
+                                    <small class="text-muted">Tu servicio backend real donde reside la lógica de negocio</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mb-0">
+                            <h6 class="text-primary"><i class="bi bi-diagram-2-fill me-2"></i>Referencia Arquitectónica</h6>
+                            <p class="mb-2">El modelo <strong>ApigeeProxyModel_v1</strong> ilustra perfectamente esta separación de responsabilidades:</p>
+                            <ul class="mb-0 small">
+                                <li><strong>Request:</strong> Cliente → ProxyEndpoint (seguridad, validación) → TargetEndpoint (transformación) → Backend</li>
+                                <li><strong>Response:</strong> Backend → TargetEndpoint (formato) → ProxyEndpoint (headers, cache) → Cliente</li>
+                                <li><strong>Beneficio clave:</strong> Los cambios en backend no afectan a los clientes gracias a la capa de abstracción del proxy</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
