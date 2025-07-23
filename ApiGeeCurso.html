@@ -872,8 +872,6 @@
                             <li><a class="dropdown-item" href="#componentes"><i class="bi bi-gear me-2"></i> Módulo 2: Componentes</a></li>
                             <li><a class="dropdown-item" href="#estructura"><i class="bi bi-diagram-3 me-2"></i> Módulo 3: Estructura</a></li>
                             <li><a class="dropdown-item" href="#publicacion"><i class="bi bi-share me-2"></i> Módulo 4: Publicación</a></li>
-                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#referencia-rapida"><i class="bi bi-bookmark-star me-2"></i> Referencia Rápida</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -896,7 +894,7 @@
         <div class="container text-center">
              <h1 class="display-3 fw-bold text-white mb-4 animate__animated animate__fadeInDown">
                 <i class="bi bi-book-half me-2"></i> Capacitación de 
-                <span style="color: #ffc107;">Apigee Edge</span>
+                <span style="color: #6FB1FC;">Apigee Edge</span>
             </h1>
             <div class="mb-4 animate__animated animate__fadeInUp animate__delay-500ms">
                 <p class="mb-2 text-white-50">
@@ -904,7 +902,7 @@
                 </p>
                 <h4 class="fw-bold text-white mb-1">Kevin Araúz</h4>
                 <p class="text-white-50 mb-0">
-                    <i class="bi bi-award me-2"></i>Arquitecto de Soluciones
+                    <i class="bi bi-award me-2"></i>Arquitecto de Soluciones TI
                 </p>
             </div>
             <p class="lead mb-5 mx-auto animate__animated animate__fadeInUp" style="max-width: 700px;">
@@ -1322,64 +1320,6 @@
                 </div>
             </div>
         </section>
-        
-        <hr class="section-separator">
-
-        <!-- Sección de Referencia Rápida -->
-        <section id="referencia-rapida">
-            <h2 class="section-title"><i class="bi bi-bookmark-star-fill"></i>Referencia Rápida</h2>
-            <p class="lead text-center mb-5" style="max-width: 800px; margin: 0 auto;">Una "cheat sheet" con los comandos, políticas y mejores prácticas más importantes para el día a día.</p>
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-terminal-fill me-2"></i>Comandos y URLs</h5></div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Management API <code>https://api.enterprise.apigee.com</code></li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Edge UI <code>https://enterprise.apigee.com</code></li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Trace Session <span class="badge bg-primary rounded-pill">Develop → Trace</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-shield-shaded me-2"></i>Políticas Comunes</h5></div>
-                        <div class="card-body">
-                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Verify API Key <span class="badge bg-success rounded-pill">Seguridad</span></li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Quota <span class="badge bg-warning rounded-pill">Tráfico</span></li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Spike Arrest <span class="badge bg-warning rounded-pill">Tráfico</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-tools me-2"></i>Troubleshooting</h5></div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Error 401:</strong> Verificar API Key / OAuth Token.</li>
-                                <li class="list-group-item"><strong>Error 429:</strong> Revisar políticas de Quota / Spike Arrest.</li>
-                                <li class="list-group-item"><strong>Error 500:</strong> Problema en el Target Server. Usar Trace.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-header bg-dark text-white"><h5 class="mb-0"><i class="bi bi-gem me-2"></i>Buenas Prácticas</h5></div>
-                        <div class="card-body">
-                           <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Usar versionado en las rutas base (ej. /v1, /v2).</li>
-                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Externalizar URLs en Target Servers.</li>
-                                <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Usar Shared Flows para lógica común.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
     </main>
 
@@ -1422,7 +1362,6 @@
                      <ul class="list-unstyled">
                         <li><a href="https://docs.apigee.com" target="_blank">Documentación Oficial</a></li>
                         <li><a href="https://community.apigee.com" target="_blank">Comunidad de Apigee</a></li>
-                        <li><a href="#" onclick="downloadCheatSheet()">Descargar Cheat Sheet</a></li>
                     </ul>
                 </div>
             </div>
@@ -1505,8 +1444,7 @@
                 'creacion': 'Módulo 1: Creación',
                 'componentes': 'Módulo 2: Componentes',
                 'estructura': 'Módulo 3: Estructura',
-                'publicacion': 'Módulo 4: Publicación',
-                'referencia-rapida': 'Referencia Rápida'
+                'publicacion': 'Módulo 4: Publicación'
             };
             return sectionNames[sectionId] || 'Manual';
         }
