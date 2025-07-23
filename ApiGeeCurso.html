@@ -686,6 +686,52 @@
             border-top-color: var(--border-color) !important;
         }
 
+        /* --- Strategic Recommendation Box --- */
+        .strategic-recommendation {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .strategic-recommendation {
+            background: linear-gradient(135deg, #2a2d33 0%, #1e2025 100%);
+            border-color: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .strategic-recommendation h5 {
+            color: inherit;
+        }
+
+        [data-theme="dark"] .strategic-recommendation h5 {
+            color: var(--text-dark);
+        }
+
+        .strategic-recommendation h6 {
+            color: inherit;
+        }
+
+        [data-theme="dark"] .strategic-recommendation h6.text-success {
+            color: #28a745 !important;
+        }
+
+        [data-theme="dark"] .strategic-recommendation h6.text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .strategic-recommendation ul {
+            color: inherit;
+        }
+
+        [data-theme="dark"] .strategic-recommendation ul {
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .strategic-recommendation .small {
+            color: rgba(248, 249, 250, 0.8);
+        }
+
         /* --- Print Styles --- */
         @media print {
             .navbar,
@@ -1139,7 +1185,7 @@
                     </div>
                 </div>
                 
-                <div class="mt-4 p-4 bg-gradient-to-r rounded" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div class="mt-4 p-4 strategic-recommendation">
                     <h5 class="fw-bold mb-3"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Recomendación Estratégica</h5>
                     <div class="row g-3">
                         <div class="col-md-6">
