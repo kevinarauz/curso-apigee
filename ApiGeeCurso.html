@@ -1591,7 +1591,7 @@
                                     <strong>XML del ProxyEndpoint: <code>default.xml</code></strong>
                                 </button>
                             </h2>
-                            <div id="collapseProxy" class="accordion-collapse collapse show" aria-labelledby="headingProxy" data-bs-parent="#accordionXml">
+                            <div id="collapseProxy" class="accordion-collapse collapse show" aria-labelledby="headingProxy">
                                 <div class="accordion-body">
                                     <p>A continuación se detalla el XML que define el comportamiento del Proxy Endpoint. Observa cómo se organizan los <code>&lt;Step&gt;</code> (que adjuntan una Política) dentro de los flujos <code>PreFlow</code>, <code>PostFlow</code> y <code>Flows</code> condicionales.</p>
                                     <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code><span class="xml-comment">&lt;!-- 
@@ -1648,11 +1648,11 @@
                         <!-- XML Target Endpoint -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTarget">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTarget" aria-expanded="false" aria-controls="collapseTarget">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTarget" aria-expanded="true" aria-controls="collapseTarget">
                                     <strong>XML del TargetEndpoint: <code>default.xml</code></strong>
                                 </button>
                             </h2>
-                            <div id="collapseTarget" class="accordion-collapse collapse" aria-labelledby="headingTarget" data-bs-parent="#accordionXml">
+                            <div id="collapseTarget" class="accordion-collapse collapse show" aria-labelledby="headingTarget">
                                 <div class="accordion-body">
                                     <p>Este es el XML del Target Endpoint. Su función es comunicarse con el servicio de backend. Define cómo manejar las respuestas y los errores que provienen del servidor de destino.</p>
                                     <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code><span class="xml-comment">&lt;!-- 
