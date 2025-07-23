@@ -862,6 +862,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#fundamentos">Fundamentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#que-es-api">¿Qué es una API?</a></li>
                     <li class="nav-item"><a class="nav-link" href="#asistente-ai">Asistente AI</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="modulosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -994,6 +995,47 @@
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Concepto Fundamental: ¿Qué es una API? -->
+        <section id="que-es-api">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">💡</div>
+                    <h2 class="m-0">Concepto Fundamental: ¿Qué es una API?</h2>
+                </div>
+                
+                <div class="concept-box">
+                    <h4><i class="bi bi-lightbulb-fill text-primary me-2"></i>Definición Simple</h4>
+                    <p>Una <strong>API (Application Programming Interface)</strong> es una interfaz que permite que una aplicación "consuma" las funciones o datos de otra aplicación. Es como un <strong>mesero en un restaurante</strong>: tú le dices qué quieres (solicitud), él va a la cocina (sistema backend) y te trae tu pedido (respuesta).</p>
+                </div>
+
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100 bg-light-blue">
+                            <h5 class="fw-bold"><i class="bi bi-puzzle me-2 text-primary"></i>¿Cómo Funciona?</h5>
+                            <ul class="mb-0">
+                                <li><strong>Puntos de entrada estables:</strong> Define formas consistentes de acceder a datos y funciones</li>
+                                <li><strong>Reutilización:</strong> Los desarrolladores pueden usar lógica creada por otros</li>
+                                <li><strong>Abstracción:</strong> Oculta la complejidad interna del sistema</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100 bg-light-blue">
+                            <h5 class="fw-bold"><i class="bi bi-handshake me-2 text-primary"></i>El "Contrato" de la API</h5>
+                            <p class="mb-0">Las APIs implican un <strong>contrato</strong> que garantiza que los cambios serán predecibles y controlados. Esto da tranquilidad a los desarrolladores que las consumen, sabiendo que sus aplicaciones no se "romperán" de un día para otro.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>¿Dónde entra Apigee?</strong> Apigee Edge te permite crear nuevas APIs o tomar APIs existentes y exponerlas con una capa adicional de <strong>administración, seguridad y visibilidad</strong>. También puedes convertir servicios web tradicionales (como servicios SOA) en APIs modernas.
                 </div>
             </div>
         </section>
@@ -1384,6 +1426,8 @@
             if (!searchInput || !searchResults) return;
             
             const searchableContent = [
+                { title: 'API', content: 'interfaz programación aplicación contrato digital comunicación datos', section: 'que-es-api' },
+                { title: 'Apigee Edge', content: 'plataforma gestión APIs proxy policies analíticas developer portal', section: 'que-es-api' },
                 { title: 'API Proxy', content: 'fachada digital intermediario backend', section: 'creacion' },
                 { title: 'Policy', content: 'bloque construcción modular seguridad transformación', section: 'estructura' },
                 { title: 'KVM', content: 'key value map configuración externa diccionario', section: 'componentes' },
