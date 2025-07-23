@@ -1493,6 +1493,387 @@
                         <strong>Diferencia con Apigee X:</strong> En la nueva versión, estos pasos se simplifican con una UI más moderna y menos opciones de configuración manual, pero los conceptos son idénticos.
                     </div>
                 </div>
+
+                <!-- Ejemplo Visual: Creación de Proxy en Apigee Edge -->
+                <div class="mt-5 p-4 strategic-recommendation">
+                    <h5 class="fw-bold mb-4"><i class="bi bi-images text-primary me-2"></i>Ejemplo Visual: Creando un Reverse Proxy en Apigee Edge</h5>
+                    <p class="mb-4">A continuación verás el flujo real de creación de un API Proxy en la interfaz de Apigee Edge clásico. Estas capturas muestran el proceso paso a paso desde la selección del tipo hasta el despliegue final.</p>
+                    
+                    <!-- Paso 1: Selección de Tipo -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="text-center">
+                                <div class="bg-white border rounded p-4 shadow-sm" style="min-height: 300px;">
+                                    <div class="bg-warning text-dark p-2 rounded mb-3">
+                                        <strong>🔶 Build a Proxy - TYPE</strong>
+                                    </div>
+                                    <div class="text-start">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" checked disabled>
+                                            <label class="form-check-label fw-bold text-primary">
+                                                🔵 Reverse proxy (most common)
+                                            </label>
+                                            <div class="small text-muted ms-3">Route inbound requests to backend services.</div>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" disabled>
+                                            <label class="form-check-label">
+                                                SOAP service
+                                            </label>
+                                            <div class="small text-muted ms-3">Create a RESTful or pass-through proxy for a SOAP service.</div>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" disabled>
+                                            <label class="form-check-label">
+                                                No Target
+                                            </label>
+                                            <div class="small text-muted ms-3">Create a simple API proxy that does not route to any backend target.</div>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" disabled>
+                                            <label class="form-check-label">
+                                                Proxy bundle
+                                            </label>
+                                            <div class="small text-muted ms-3">Import an existing proxy from a zip archive.</div>
+                                        </div>
+                                        <div class="small text-muted mt-3">
+                                            <span class="text-warning">Node.js App</span> - deprecated as per the Trireme EOL
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 d-flex justify-content-end">
+                                        <button class="btn btn-primary btn-sm" disabled>Next</button>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted"><strong>Paso 1:</strong> Selección del Tipo de Proxy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 bg-light rounded h-100 d-flex flex-column justify-content-center">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-1-square-fill me-2"></i>TYPE: Elegir el Tipo de Proxy</h6>
+                                <ul class="mb-3">
+                                    <li><strong>🔵 Reverse proxy (most common):</strong> La opción seleccionada - redirige solicitudes a servicios backend</li>
+                                    <li><strong>SOAP service:</strong> Para servicios web SOAP tradicionales</li>
+                                    <li><strong>No Target:</strong> Proxy sin backend (para mocking o datos estáticos)</li>
+                                    <li><strong>Proxy bundle:</strong> Importar un proxy existente desde archivo ZIP</li>
+                                </ul>
+                                <div class="alert alert-success mb-0">
+                                    <small><i class="bi bi-check-circle me-2"></i><strong>Observa</strong> que "Reverse proxy" está seleccionado por defecto porque es el patrón más común para APIs REST.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2: Detalles del Proxy -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="p-3 bg-light rounded h-100 d-flex flex-column justify-content-center">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-2-square-fill me-2"></i>DETAILS: Configurar los Detalles</h6>
+                                <ul class="mb-3">
+                                    <li><strong>Proxy Name:</strong> <code>Api-Proxy-Debtmanagement-2</code> - Nombre único del proxy</li>
+                                    <li><strong>Proxy Base Path:</strong> <code>/debtmanagement/v1</code> - URL pública del API</li>
+                                    <li><strong>Existing API:</strong> URL del servicio backend real</li>
+                                    <li><strong>Description:</strong> <code>Prueba</code> - Documentación del proxy</li>
+                                </ul>
+                                <div class="alert alert-info mb-0">
+                                    <small><i class="bi bi-info-circle me-2"></i>El <strong>Base Path</strong> es lo que verán los clientes. El backend puede estar en una URL completamente diferente.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-center">
+                                <div class="bg-white border rounded p-4 shadow-sm" style="min-height: 300px;">
+                                    <div class="bg-info text-white p-2 rounded mb-3">
+                                        <strong>🔷 Build a Proxy - DETAILS</strong>
+                                    </div>
+                                    <div class="text-start">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Proxy Name *</label>
+                                            <input type="text" class="form-control form-control-sm" value="Api-Proxy-Debtmanagement-2" disabled>
+                                            <div class="small text-muted">Valid characters are letters, numbers, dash (-), and underscore (_).</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Proxy Base Path *</label>
+                                            <input type="text" class="form-control form-control-sm" value="/debtmanagement/v1" disabled>
+                                            <div class="small text-muted">A path component that uniquely identifies this API proxy.</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Existing API *</label>
+                                            <input type="text" class="form-control form-control-sm" value="https://claro-backend-capa-digital.apps.aro-dev.conecel.com" disabled>
+                                            <div class="small text-muted">Defines the target URL invoked on behalf of this API proxy.</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Description</label>
+                                            <input type="text" class="form-control form-control-sm" value="Prueba" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                                        <button class="btn btn-primary btn-sm" disabled>Next</button>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted"><strong>Paso 2:</strong> Configuración de Detalles</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 3: Seguridad -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="text-center">
+                                <div class="bg-white border rounded p-4 shadow-sm" style="min-height: 280px;">
+                                    <div class="bg-success text-white p-2 rounded mb-3">
+                                        <strong>🔐 Build a Proxy - SECURITY</strong>
+                                    </div>
+                                    <div class="text-start">
+                                        <p class="small mb-3">Secure access for users and clients.</p>
+                                        
+                                        <div class="mb-2"><strong>Authorization</strong></div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" disabled>
+                                            <label class="form-check-label">Pass through (none)</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" disabled>
+                                            <label class="form-check-label">API key</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" checked disabled>
+                                            <label class="form-check-label fw-bold text-primary">OAuth 2.0</label>
+                                        </div>
+                                        
+                                        <div class="ms-3 mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked disabled>
+                                                <label class="form-check-label small">Impose Quota Per Developer</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked disabled>
+                                                <label class="form-check-label small">Publish API Product</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-2"><strong>Browser</strong></div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" disabled>
+                                            <label class="form-check-label small">Add CORS headers</label>
+                                        </div>
+                                        
+                                        <div class="mb-2"><strong>Monetization</strong></div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" disabled>
+                                            <label class="form-check-label small">Enable Monetization Limits Check</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                                        <button class="btn btn-primary btn-sm" disabled>Next</button>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted"><strong>Paso 3:</strong> Configuración de Seguridad</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 bg-light rounded h-100 d-flex flex-column justify-content-center">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-3-square-fill me-2"></i>SECURITY: Configurar la Seguridad</h6>
+                                <ul class="mb-3">
+                                    <li><strong>OAuth 2.0 seleccionado:</strong> Autenticación robusta con tokens</li>
+                                    <li><strong>Impose Quota Per Developer:</strong> Límites automáticos por desarrollador</li>
+                                    <li><strong>Publish API Product:</strong> Crea automáticamente un producto para el proxy</li>
+                                </ul>
+                                <div class="alert alert-warning mb-0">
+                                    <small><i class="bi bi-shield-check me-2"></i>Estas opciones agregan automáticamente <strong>políticas de seguridad</strong> al proxy sin necesidad de configuración manual.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 4: Virtual Hosts -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="p-3 bg-light rounded h-100 d-flex flex-column justify-content-center">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-4-square-fill me-2"></i>VIRTUAL HOSTS: Seleccionar Puntos de Entrada</h6>
+                                <ul class="mb-3">
+                                    <li><strong>VHost-Secure (seleccionado):</strong> Acceso HTTPS seguro</li>
+                                    <li><strong>VHost-prueba, VHost-OA-Default:</strong> Otros entornos disponibles</li>
+                                    <li><strong>Host Aliases:</strong> Las URLs reales donde se accederá al proxy</li>
+                                </ul>
+                                <div class="alert alert-success mb-0">
+                                    <small><i class="bi bi-globe me-2"></i>Los Virtual Hosts definen <strong>dónde y cómo</strong> los clientes pueden acceder a tu proxy (HTTP vs HTTPS, diferentes dominios).</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-center">
+                                <div class="bg-white border rounded p-4 shadow-sm" style="min-height: 350px;">
+                                    <div class="bg-primary text-white p-2 rounded mb-3">
+                                        <strong>🌐 Build a Proxy - VIRTUAL HOSTS</strong>
+                                    </div>
+                                    <div class="text-start">
+                                        <p class="small mb-3">Select the virtual hosts this proxy will bind to when it is deployed. You must select at least one virtual host.</p>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th width="50"></th>
+                                                        <th>Name</th>
+                                                        <th>Environment</th>
+                                                        <th>Host Aliases</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>default</td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small">http://api-proxy.gate.dev.conecel.com:9001</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>qa</td>
+                                                        <td><span class="badge bg-warning">qa</span></td>
+                                                        <td class="small">http://api-proxy.gate.qa.conecel.com:9001</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>VHost-prueba</td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small">http://10.225.13.94:9001, http://10.225.13.95:9001</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>VHost-OA-Default</td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small">http://api-proxy.gate.qa.conecel.com:9001</td>
+                                                    </tr>
+                                                    <tr class="table-success">
+                                                        <td><input type="checkbox" class="form-check-input" checked disabled></td>
+                                                        <td><strong>VHost-Secure</strong></td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small"><strong>https://api-proxy.gate.dev.conecel.com</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>Vhost-service</td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small">http://service.gate.dev.conecel.com:9001</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="checkbox" class="form-check-input" disabled></td>
+                                                        <td>VHost-Transforma</td>
+                                                        <td><span class="badge bg-secondary">dev</span></td>
+                                                        <td class="small">http://apis.dev.claro.com.ec:9001</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                                        <button class="btn btn-primary btn-sm" disabled>Next</button>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted"><strong>Paso 4:</strong> Selección de Virtual Hosts</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 5: Build y Deploy -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="text-center">
+                                <div class="bg-white border rounded p-4 shadow-sm" style="min-height: 320px;">
+                                    <div class="bg-success text-white p-2 rounded mb-3">
+                                        <strong>🚀 Build a Proxy - BUILD</strong>
+                                    </div>
+                                    <div class="text-start">
+                                        <p class="mb-3">You are ready to build and deploy your API proxy.</p>
+                                        
+                                        <div class="mb-3">
+                                            <strong class="small">Deploy Environments</strong>
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" checked disabled>
+                                                <label class="form-check-label">
+                                                    <span class="badge bg-secondary">dev</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Proxy Name</strong></div>
+                                                <div class="col-8">Api-Proxy-Debtmanagement-2</div>
+                                            </div>
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Proxy Type</strong></div>
+                                                <div class="col-8">Reverse proxy</div>
+                                            </div>
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Virtual Hosts</strong></div>
+                                                <div class="col-8">VHost-Secure</div>
+                                            </div>
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Security</strong></div>
+                                                <div class="col-8">✓ Secure with OAuth v2.0 Access Tokens</div>
+                                            </div>
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Browser</strong></div>
+                                                <div class="col-8">Do not allow direct requests from a browser via CORS</div>
+                                            </div>
+                                            <div class="row small">
+                                                <div class="col-4"><strong>Monetization</strong></div>
+                                                <div class="col-8">✗</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                                        <button class="btn btn-success btn-sm" disabled>
+                                            <i class="bi bi-rocket-takeoff me-1"></i>Build and Deploy
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted"><strong>Paso 5:</strong> Resumen y Despliegue</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 bg-light rounded h-100 d-flex flex-column justify-content-center">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-5-square-fill me-2"></i>BUILD: Resumen y Despliegue</h6>
+                                <ul class="mb-3">
+                                    <li><strong>Revisión final:</strong> Todos los parámetros configurados</li>
+                                    <li><strong>Environment:</strong> "dev" seleccionado para despliegue</li>
+                                    <li><strong>Build and Deploy:</strong> Crea y activa el proxy</li>
+                                </ul>
+                                <div class="alert alert-info mb-0">
+                                    <small><i class="bi bi-lightning me-2"></i>Una vez hecho clic en <strong>"Build and Deploy"</strong>, tu proxy estará vivo y accesible en segundos a través de la URL configurada.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resultado Final -->
+                    <div class="mt-4 p-3 bg-success bg-opacity-10 border border-success rounded">
+                        <h6 class="text-success fw-bold mb-2"><i class="bi bi-check-circle-fill me-2"></i>Resultado Final</h6>
+                        <p class="mb-2">Después de completar estos pasos, tendrás:</p>
+                        <ul class="mb-0 small">
+                            <li>Un <strong>API Proxy funcional</strong> llamado "Api-Proxy-Debtmanagement-2"</li>
+                            <li>Accesible vía <strong>HTTPS</strong> en: <code>https://api-proxy.gate.dev.conecel.com/debtmanagement/v1</code></li>
+                            <li>Con <strong>seguridad OAuth 2.0</strong> habilitada automáticamente</li>
+                            <li>Un <strong>API Product</strong> creado automáticamente para gestionar el acceso</li>
+                            <li>Políticas de <strong>cuota por desarrollador</strong> aplicadas</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
         
