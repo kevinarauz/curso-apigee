@@ -1262,13 +1262,18 @@
                                 <div class="d-flex flex-wrap justify-content-center gap-2">
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('API Proxy')">API Proxy</button>
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Reverse Proxy')">Reverse Proxy</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Policies')">Políticas</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('ProxyEndpoint')">ProxyEndpoint</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('TargetEndpoint')">TargetEndpoint</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('PreFlow')">PreFlow</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('PostFlow')">PostFlow</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Flows')">Flows</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('OAuth 2.0')">OAuth 2.0</button>
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('API Products')">API Products</button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Developer Apps')">Developer Apps</button>
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('KVM')">KVM</button>
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Target Servers')">Target Servers</button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Shared Flow')">Shared Flow</button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('OAS')">OAS</button>
                                     <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Virtual Host')">Virtual Host</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="setExampleQuery('Apigee Edge vs X')">Edge vs X</button>
                                 </div>
                             </div>
                             <button class="btn btn-primary-gradient btn-lg" id="ai-assistant-btn" onclick="handleAsistenteClick()">
@@ -2535,6 +2540,51 @@ BUENAS PRÁCTICAS:
                         benefits: ['Múltiples dominios', 'Configuración SSL', 'Routing por host', 'Separación de tráfico'],
                         example: 'VHost "api-secure": api.empresa.com:443 con SSL. VHost "internal": internal.empresa.com:8080 sin SSL.',
                         xmlContext: 'Se referencia en <VirtualHost>VHost-Secure</VirtualHost> dentro de <HTTPProxyConnection> del ProxyEndpoint.'
+                    },
+                    'policies': {
+                        title: 'Políticas (Policies)',
+                        icon: 'bi-gear-fill',
+                        definition: 'Módulos que implementan funciones de administración específicas sin escribir código. Son como "filtros inteligentes" en el flujo de solicitud/respuesta.',
+                        analogy: '🏭 <strong>Analogía:</strong> Como estaciones especializadas en una línea de ensamblaje - cada política hace una tarea específica (validar, transformar, autenticar).',
+                        benefits: ['Sin código personalizado', 'Funcionalidad probada', 'Reutilización', 'Mantenimiento simplificado'],
+                        example: 'Política VerifyAPIKey valida credenciales. Política JSONtoXML convierte formatos. Política Quota limita llamadas por hora.',
+                        xmlContext: 'Se invocan mediante <Step><Name>nombre-politica</Name></Step> en cualquier Request o Response dentro de los flujos.'
+                    },
+                    'proxyendpoint': {
+                        title: 'ProxyEndpoint',
+                        icon: 'bi-box-arrow-in-right',
+                        definition: 'Define la interfaz pública del API - cómo los clientes se conectan y consumen tu API, incluyendo URL base y configuración HTTPS.',
+                        analogy: '🏪 <strong>Analogía:</strong> Como la fachada y entrada principal de una tienda - los clientes ven esta parte bonita y organizada.',
+                        benefits: ['Interfaz estable para clientes', 'Configuración de seguridad', 'Validación de entrada', 'Control de acceso'],
+                        example: 'ProxyEndpoint con BasePath="/api/v1/users" expone la URL https://api.empresa.com/api/v1/users a los desarrolladores.',
+                        xmlContext: 'Se define como <ProxyEndpoint name="default"> conteniendo HTTPProxyConnection, PreFlow, Flows y PostFlow.'
+                    },
+                    'targetendpoint': {
+                        title: 'TargetEndpoint',
+                        icon: 'bi-bullseye',
+                        definition: 'Define cómo el proxy se comunica con los servicios de backend, incluyendo transformaciones y configuración de conexión.',
+                        analogy: '🔌 <strong>Analogía:</strong> Como el adaptador que conecta tu dispositivo al tomacorriente - convierte y gestiona la comunicación interna.',
+                        benefits: ['Abstracción de backend', 'Transformación de datos', 'Configuración de timeouts', 'Balanceo de carga'],
+                        example: 'TargetEndpoint conecta con https://backend.empresa.com/internal/users, transformando JSON a formato interno.',
+                        xmlContext: 'Se define como <TargetEndpoint name="default"> con HTTPTargetConnection, PreFlow y PostFlow para el backend.'
+                    },
+                    'oauth 20': {
+                        title: 'OAuth 2.0',
+                        icon: 'bi-shield-lock',
+                        definition: 'Protocolo de autorización que permite acceso seguro mediante tokens, sin compartir credenciales directamente.',
+                        analogy: '🎫 <strong>Analogía:</strong> Como un pase temporal de invitado en un edificio - te dan acceso específico por tiempo limitado sin darte las llaves.',
+                        benefits: ['Seguridad sin passwords', 'Tokens con expiración', 'Scopes granulares', 'Revocación inmediata'],
+                        example: 'App móvil obtiene access_token válido por 1 hora para scope "read:users", sin conocer password del usuario.',
+                        xmlContext: 'Se implementa mediante políticas OAuthV2 y VerifyAccessToken en Steps del ProxyEndpoint: <Step><Name>OAuth-Validation</Name></Step>'
+                    },
+                    'apigee edge vs x': {
+                        title: 'Apigee Edge vs Apigee X',
+                        icon: 'bi-arrow-left-right',
+                        definition: 'Edge es la versión clásica (UI naranja, on-premise) y X es la nueva versión cloud-native (UI moderna, solo GCP).',
+                        analogy: '🏢 <strong>Analogía:</strong> Edge es como una oficina tradicional que puedes decorar a tu gusto. X es como un co-working moderno - más límites pero servicios incluidos.',
+                        benefits: ['Edge: Control total, híbrido. X: Serverless, integración GCP', 'Conceptos idénticos, UI diferente', 'Migración directa posible'],
+                        example: 'En Edge creas proxy con wizards naranjas. En X usas UI Material Design. Los XMLs y políticas son idénticos.',
+                        xmlContext: 'Los XMLs de proxy son 100% compatibles entre versiones. Solo cambia la forma de crearlos y desplegarlos.'
                     }
                 };
                 
