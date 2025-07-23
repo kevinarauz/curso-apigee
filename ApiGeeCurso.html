@@ -732,6 +732,27 @@
             color: rgba(248, 249, 250, 0.8);
         }
 
+        /* --- Diagram Images Styling --- */
+        .strategic-recommendation img {
+            transition: all 0.3s ease;
+            background-color: white;
+            padding: 10px;
+        }
+
+        [data-theme="dark"] .strategic-recommendation img {
+            background-color: #2a2d33;
+            border-color: var(--border-color) !important;
+        }
+
+        .strategic-recommendation img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] .strategic-recommendation img:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
         /* --- Print Styles --- */
         @media print {
             .navbar,
@@ -785,6 +806,15 @@
             
             .copy-btn {
                 display: none !important;
+            }
+            
+            /* Ensure images print well */
+            .strategic-recommendation img {
+                background: white !important;
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                page-break-inside: avoid;
             }
         }
 
@@ -1672,6 +1702,19 @@
                         <h5 class="mb-3"><i class="bi bi-eye-fill text-primary me-2"></i>Visualización de los Proxies de API</h5>
                         
                         <p class="mb-3">Puedes visualizar los proxies de API como se muestra en el diagrama arquitectónico de referencia. La arquitectura típica sigue este patrón:</p>
+                        
+                        <!-- Imagen del Modelo Arquitectónico -->
+                        <div class="text-center mb-4">
+                            <img src="img/ApigeeProxyModel_v1.png" 
+                                 alt="Diagrama del Modelo de API Proxy en Apigee Edge mostrando el flujo desde Cliente HTTP hasta Servicio Backend" 
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-width: 100%; height: auto; border: 1px solid var(--border-color);">
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <strong>Figura 1:</strong> Modelo arquitectónico del API Proxy mostrando el flujo completo: Cliente HTTP → ProxyEndpoint → TargetEndpoint → Servicio Backend
+                                </small>
+                            </div>
+                        </div>
                         
                         <div class="row g-3 mb-4">
                             <div class="col-lg-4">
