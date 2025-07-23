@@ -862,6 +862,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#fundamentos">Fundamentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#diferencias-versiones">Edge vs X</a></li>
                     <li class="nav-item"><a class="nav-link" href="#que-es-api">¿Qué es una API?</a></li>
                     <li class="nav-item"><a class="nav-link" href="#asistente-ai">Asistente AI</a></li>
                     <li class="nav-item dropdown">
@@ -927,6 +928,48 @@
             <h2 class="section-title"><i class="bi bi-journal-bookmark-fill"></i>Módulo 0: Fundamentos de Apigee</h2>
             <p class="lead text-center mb-5" style="max-width: 800px; margin: 0 auto;">Apigee es una plataforma de gestión de APIs que actúa como una fachada inteligente para tus servicios de backend. Piensa en ello como el conserje de un hotel de lujo para tus datos.</p>
             
+            <!-- Información sobre Apigee Edge vs Apigee X -->
+            <div class="alert alert-warning mb-5" role="alert">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                    <h5 class="alert-heading mb-0">📍 Importante: Estamos usando Apigee Edge (Clásico)</h5>
+                </div>
+                <p class="mb-3">Este curso está basado en <strong>Apigee Edge</strong>, la versión clásica de la plataforma que Google aún mantiene y es ampliamente utilizada en el enterprise. Reconocerás la interfaz por su característico <strong>color naranja</strong> y su arquitectura on-premise/híbrida.</p>
+                
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="fw-bold text-primary"><i class="bi bi-building me-2"></i>Apigee Edge (Clásico) - Lo que usamos</h6>
+                            <ul class="small mb-0">
+                                <li><strong>UI Naranja:</strong> Interfaz clásica con diseño distintivo</li>
+                                <li><strong>On-Premise/Híbrido:</strong> Puede desplegarse en tus servidores</li>
+                                <li><strong>Gestión por Organización:</strong> Estructura tradicional</li>
+                                <li><strong>Management Server:</strong> Arquitectura basada en servidores</li>
+                                <li><strong>Políticas XML:</strong> Configuración tradicional</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="fw-bold text-success"><i class="bi bi-cloud me-2"></i>Apigee X (Nuevo) - La evolución</h6>
+                            <ul class="small mb-0">
+                                <li><strong>UI Moderna:</strong> Diseño Material basado en GCP</li>
+                                <li><strong>100% Cloud:</strong> Solo en Google Cloud Platform</li>
+                                <li><strong>Gestión por Proyecto:</strong> Integrado con GCP</li>
+                                <li><strong>Serverless:</strong> Sin gestión de infraestructura</li>
+                                <li><strong>YAML + UI:</strong> Configuración modernizada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <strong>💡 Nota:</strong> Los conceptos fundamentales (proxies, políticas, flows) son idénticos entre versiones. Solo cambia la interfaz y el modelo de despliegue.
+                    </small>
+                </div>
+            </div>
+            
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3">
                     <div class="feature-card">
@@ -954,6 +997,169 @@
                         <div class="icon"><i class="bi bi-people-fill"></i></div>
                         <h5 class="card-title fw-bold">Gestión de Devs</h5>
                         <p class="card-text small">Facilita la adopción de tus APIs con portales de desarrolladores y documentación clara.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <!-- Sección: Diferencias Edge vs Apigee X -->
+        <section id="diferencias-versiones">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">🔄</div>
+                    <h2 class="m-0">Edge Clásico vs Apigee X: Diferencias Clave</h2>
+                </div>
+                
+                <p class="lead mb-4">Aunque los conceptos fundamentales son idénticos, existen diferencias importantes en la experiencia de usuario, arquitectura y modelo de despliegue.</p>
+                
+                <div class="row g-4">
+                    <!-- Interfaz de Usuario -->
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-warning">
+                            <div class="card-header bg-warning text-dark fw-bold">
+                                <i class="bi bi-display me-2"></i>Interfaz de Usuario
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <h6 class="text-primary fw-bold">🔶 Apigee Edge (Actual)</h6>
+                                        <ul class="small">
+                                            <li>Interfaz naranja distintiva</li>
+                                            <li>Navegación por pestañas tradicionales</li>
+                                            <li>Editor XML integrado para políticas</li>
+                                            <li>Trace tool con vista detallada</li>
+                                            <li>Analytics con dashboards clásicos</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6 class="text-success fw-bold">🔷 Apigee X (Nuevo)</h6>
+                                        <ul class="small">
+                                            <li>Diseño Material moderno (blanco/azul)</li>
+                                            <li>Navegación lateral estilo GCP</li>
+                                            <li>Editor visual + YAML</li>
+                                            <li>Debug mejorado con live tracing</li>
+                                            <li>Analytics integrados con GCP</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arquitectura -->
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-info">
+                            <div class="card-header bg-info text-white fw-bold">
+                                <i class="bi bi-diagram-3 me-2"></i>Arquitectura y Despliegue
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <h6 class="text-primary fw-bold">🔶 Apigee Edge</h6>
+                                        <ul class="small">
+                                            <li><strong>Híbrido/On-premise:</strong> Flexibilidad total</li>
+                                            <li><strong>Management Server:</strong> Administración centralizada</li>
+                                            <li><strong>Message Processor:</strong> Runtime separado</li>
+                                            <li><strong>Cassandra:</strong> Base de datos analytics</li>
+                                            <li><strong>Control de infraestructura</strong></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6 class="text-success fw-bold">🔷 Apigee X</h6>
+                                        <ul class="small">
+                                            <li><strong>100% Cloud:</strong> Solo Google Cloud</li>
+                                            <li><strong>Serverless:</strong> Sin gestión de servidores</li>
+                                            <li><strong>Auto-scaling:</strong> Escalado automático</li>
+                                            <li><strong>BigQuery:</strong> Analytics nativo GCP</li>
+                                            <li><strong>Managed service completo</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Características Técnicas -->
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-success">
+                            <div class="card-header bg-success text-white fw-bold">
+                                <i class="bi bi-gear me-2"></i>Características Técnicas
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <h6 class="text-primary fw-bold">🔶 Apigee Edge</h6>
+                                        <ul class="small">
+                                            <li><strong>Organizaciones:</strong> Estructura tradicional</li>
+                                            <li><strong>Entornos:</strong> test, prod, etc.</li>
+                                            <li><strong>Virtual Hosts:</strong> Configuración manual</li>
+                                            <li><strong>TLS:</strong> Certificados manuales</li>
+                                            <li><strong>Monetización:</strong> Módulo separado</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6 class="text-success fw-bold">🔷 Apigee X</h6>
+                                        <ul class="small">
+                                            <li><strong>Proyectos GCP:</strong> Integración nativa</li>
+                                            <li><strong>Instances:</strong> Concepto simplificado</li>
+                                            <li><strong>Load Balancers:</strong> GCP automático</li>
+                                            <li><strong>TLS:</strong> Google-managed certificates</li>
+                                            <li><strong>Monetización:</strong> Incluida por defecto</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Migración y Compatibilidad -->
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-secondary">
+                            <div class="card-header bg-secondary text-white fw-bold">
+                                <i class="bi bi-arrow-left-right me-2"></i>Migración y Compatibilidad
+                            </div>
+                            <div class="card-body">
+                                <h6 class="fw-bold text-info mb-3">📋 Aspectos Clave de Migración</h6>
+                                <ul class="small">
+                                    <li><strong>Proxies:</strong> Se migran automáticamente</li>
+                                    <li><strong>Políticas:</strong> 100% compatibles</li>
+                                    <li><strong>Configuración:</strong> Requiere adaptación</li>
+                                    <li><strong>Integrations:</strong> Nuevas APIs GCP</li>
+                                    <li><strong>Monitoring:</strong> Cambia a Cloud Monitoring</li>
+                                    <li><strong>DevPortal:</strong> Drupal → Integrated Portal</li>
+                                </ul>
+                                
+                                <div class="alert alert-light mt-3 p-2">
+                                    <small><strong>🎯 Para el Aprendizaje:</strong> Los conceptos que aprendas en Edge son 100% aplicables a Apigee X. Solo cambia dónde haces clic.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-4 bg-gradient-to-r rounded" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Recomendación Estratégica</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h6 class="text-success">✅ Mantente en Edge si:</h6>
+                            <ul class="small">
+                                <li>Necesitas control total de infraestructura</li>
+                                <li>Tienes integraciones complejas on-premise</li>
+                                <li>Regulaciones requieren datos locales</li>
+                                <li>El costo cloud es prohibitivo</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary">🚀 Considera Apigee X si:</h6>
+                            <ul class="small">
+                                <li>Quieres eliminar gestión de infraestructura</li>
+                                <li>Necesitas escalado automático</li>
+                                <li>Buscas integración nativa con GCP</li>
+                                <li>Prefieres un modelo fully-managed</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1057,9 +1263,11 @@
                 </div>
 
                 <div class="p-4 rounded bg-light-blue mt-4">
-                    <h5 class="fw-bold"><i class="bi bi-signpost-split-fill me-2 text-primary"></i>Pasos Clave para la Creación</h5>
+                    <h5 class="fw-bold"><i class="bi bi-signpost-split-fill me-2 text-primary"></i>Pasos para Creación en Apigee Edge Clásico</h5>
                     <ol class="list-group list-group-numbered">
-                        <li class="list-group-item border-0 bg-transparent"><strong>Acceso y Navegación:</strong> Ingresa a Apigee y navega a <code>API Proxies > + API Proxy</code>.</li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Acceso y Navegación:</strong> Ingresa a tu Management Server de Apigee Edge (interfaz naranja) y navega a <code>APIs > API Proxies</code>, luego haz clic en <code>+ API Proxy</code>.
+                        </li>
                         <li class="list-group-item border-0 bg-transparent">
                             <strong>Tipo de Proxy:</strong> Selecciona <strong>"Reverse Proxy"</strong>, el más común para empezar.
                             <div class="concept-box mt-2 p-3">
@@ -1067,9 +1275,30 @@
                                 <p class="small mb-0">Es un tipo de servidor que se sienta frente a los servidores web/aplicaciones y reenvía las solicitudes de los clientes a esos servidores. Para el cliente, el reverse proxy parece ser el servidor de origen. Es el patrón más común en Apigee porque permite centralizar la gestión y la seguridad de múltiples servicios de backend.</p>
                             </div>
                         </li>
-                        <li class="list-group-item border-0 bg-transparent"><strong>Definición de Detalles:</strong> Asigna un nombre (<code>users-api-v1</code>), una ruta base (<code>/v1/users</code>) y la URL de tu backend.</li>
-                        <li class="list-group-item border-0 bg-transparent"><strong>Despliegue:</strong> Elige el ambiente (ej. 'test') y despliega. ¡Tu proxy está vivo!</li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Configuración de Detalles:</strong> En Apigee Edge verás campos como:
+                            <ul class="mt-2 small">
+                                <li><strong>Proxy Name:</strong> Ej. <code>users-api-v1</code></li>
+                                <li><strong>Proxy Base Path:</strong> Ej. <code>/v1/users</code></li>
+                                <li><strong>Existing API:</strong> URL de tu backend</li>
+                                <li><strong>Description:</strong> Documentación del proxy</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Selección de Entorno:</strong> En Edge clásico tendrás entornos como 'test', 'prod', etc. Selecciona donde desplegar.
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Virtual Hosts:</strong> Edge te permite seleccionar Virtual Hosts específicos (secure, default) para el despliegue.
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent">
+                            <strong>Deploy:</strong> Haz clic en "Build and Deploy" y ¡tu proxy estará vivo en segundos!
+                        </li>
                     </ol>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-lightbulb me-2"></i>
+                        <strong>Diferencia con Apigee X:</strong> En la nueva versión, estos pasos se simplifican con una UI más moderna y menos opciones de configuración manual, pero los conceptos son idénticos.
+                    </div>
                 </div>
             </div>
         </section>
@@ -1402,8 +1631,9 @@
                 <div class="col-md-4">
                     <h5>Recursos</h5>
                      <ul class="list-unstyled">
-                        <li><a href="https://docs.apigee.com" target="_blank">Documentación Oficial</a></li>
-                        <li><a href="https://community.apigee.com" target="_blank">Comunidad de Apigee</a></li>
+                        <li><a href="https://docs.apigee.com" target="_blank"><i class="bi bi-book me-2"></i>Documentación Oficial</a></li>
+                        <li><a href="https://community.apigee.com" target="_blank"><i class="bi bi-people me-2"></i>Comunidad de Apigee</a></li>
+                        <li><a href="https://www.youtube.com/playlist?list=PLIXjuPlujxxz3UXTytamxUB8EGzbaqAqQ" target="_blank"><i class="bi bi-play-circle me-2"></i>Videos de Capacitación</a></li>
                     </ul>
                 </div>
             </div>
@@ -1426,6 +1656,9 @@
             if (!searchInput || !searchResults) return;
             
             const searchableContent = [
+                { title: 'Apigee Edge vs X', content: 'diferencias versiones clásico moderno migración interfaz arquitectura', section: 'diferencias-versiones' },
+                { title: 'Interfaz Naranja', content: 'apigee edge clásico UI management server on-premise híbrido', section: 'diferencias-versiones' },
+                { title: 'Apigee X Cloud', content: 'serverless google cloud platform GCP modern interface', section: 'diferencias-versiones' },
                 { title: 'API', content: 'interfaz programación aplicación contrato digital comunicación datos', section: 'que-es-api' },
                 { title: 'Apigee Edge', content: 'plataforma gestión APIs proxy policies analíticas developer portal', section: 'que-es-api' },
                 { title: 'API Proxy', content: 'fachada digital intermediario backend', section: 'creacion' },
