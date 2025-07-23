@@ -1716,7 +1716,7 @@
                                     
                                     <div class="term-item mb-4">
                                         <h6 class="fw-bold text-primary"><i class="bi bi-play-circle me-2"></i>Step</h6>
-                                        <p class="small mb-0">Es un paso dentro de un flujo. Generalmente, contiene una política (<code>&lt;Name&gt;</code>) para ser ejecutada.</p>
+                                        <p class="small mb-0">Es un paso dentro de un flujo. Generalmente, contiene el nombre de una <strong>política</strong> (<code>&lt;Name&gt;</code>) para ser ejecutada. Por ejemplo: <code>&lt;Step&gt;&lt;Name&gt;fc-oauth-security&lt;/Name&gt;&lt;/Step&gt;</code> ejecuta la política llamada "fc-oauth-security".</p>
                                     </div>
                                     
                                     <div class="term-item mb-4">
@@ -1767,6 +1767,11 @@
                 </div>
                 
                 <div class="mt-4">
+                    <div class="alert alert-info mb-4">
+                        <h6><i class="bi bi-info-circle-fill me-2"></i>Conexión Importante: Políticas y XML</h6>
+                        <p class="mb-0">Recuerda que las <strong>políticas</strong> que vimos en la sección anterior se invocan desde el XML del proxy mediante elementos <code>&lt;Step&gt;&lt;Name&gt;nombre-política&lt;/Name&gt;&lt;/Step&gt;</code>. Cada Step ejecuta una política específica que implementa funcionalidades como seguridad, transformación, etc.</p>
+                    </div>
+                    
                     <h5 class="fw-bold text-center my-4">Análisis del Código XML</h5>
                     <div class="accordion" id="accordionXml">
                         <!-- XML Proxy Endpoint -->
@@ -1778,7 +1783,7 @@
                             </h2>
                             <div id="collapseProxy" class="accordion-collapse collapse show" aria-labelledby="headingProxy">
                                 <div class="accordion-body">
-                                    <p>A continuación se detalla el XML que define el comportamiento del Proxy Endpoint. Observa cómo se organizan los <code>&lt;Step&gt;</code> (que adjuntan una Política) dentro de los flujos <code>PreFlow</code>, <code>PostFlow</code> y <code>Flows</code> condicionales.</p>
+                                    <p>A continuación se detalla el XML que define el comportamiento del Proxy Endpoint. Observa cómo se organizan los <code>&lt;Step&gt;</code> (que ejecutan <strong>políticas específicas</strong>) dentro de los flujos <code>PreFlow</code>, <code>PostFlow</code> y <code>Flows</code> condicionales. Cada <code>&lt;Name&gt;</code> dentro de un Step corresponde a una política que implementa funcionalidades como OAuth, cuotas, logging, etc.</p>
                                     <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code><span class="xml-comment">&lt;!-- 
     El ProxyEndpoint define la interfaz pública del API.
     Maneja la lógica de cara al cliente.
@@ -1795,10 +1800,10 @@
     <span class="xml-tag">&lt;PreFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PreFlow"</span><span class="xml-tag">&gt;</span>
         <span class="xml-comment">&lt;!-- Se ejecuta para CADA solicitud entrante --&gt;</span>
         <span class="xml-tag">&lt;Request&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-uuid-time-generator<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Genera un ID único --&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-oauth-security<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Valida el token OAuth --&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>KVM-Debtmanagement<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Carga valores de un KVM --&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>q-debtmanagement-quota<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Aplica la cuota de uso --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-uuid-time-generator<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Genera un ID único para tracking --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>fc-oauth-security<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Valida el token OAuth --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>KVM-Debtmanagement<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Carga valores de un KVM --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>q-debtmanagement-quota<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Aplica la cuota de uso --&gt;</span>
         <span class="xml-tag">&lt;/Request&gt;</span>
         <span class="xml-tag">&lt;Response/&gt;</span>
     <span class="xml-tag">&lt;/PreFlow&gt;</span>
@@ -1812,7 +1817,7 @@
         <span class="xml-comment">&lt;!-- Flujo condicional para una operación específica --&gt;</span>
         <span class="xml-tag">&lt;Flow</span> <span class="xml-attribute">name=</span><span class="xml-value">"debt"</span><span class="xml-tag">&gt;</span>
             <span class="xml-tag">&lt;Request&gt;</span>
-                <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>oas-validation<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Valida contra la especificación OpenAPI --&gt;</span>
+                <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>oas-validation<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Valida contra la especificación OpenAPI --&gt;</span>
             <span class="xml-tag">&lt;/Request&gt;</span>
             <span class="xml-tag">&lt;Response/&gt;</span>
             <span class="xml-tag">&lt;Condition&gt;</span>(proxy.pathsuffix MatchesPath "/debt/{id}") and (request.verb = "GET")<span class="xml-tag">&lt;/Condition&gt;</span>
@@ -1856,9 +1861,9 @@
     <span class="xml-tag">&lt;PreFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PreFlow"</span><span class="xml-tag">&gt;</span>
         <span class="xml-tag">&lt;Request/&gt;</span>
         <span class="xml-tag">&lt;Response&gt;</span>
-            <span class="xml-comment">&lt;!-- Políticas aplicadas a la respuesta del backend --&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>add-cors<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Agrega cabeceras CORS --&gt;</span>
-            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>am-set-date-header<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- Agrega una cabecera de fecha --&gt;</span>
+            <span class="xml-comment">&lt;!-- POLÍTICAS aplicadas a la respuesta del backend --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>add-cors<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Agrega cabeceras CORS --&gt;</span>
+            <span class="xml-tag">&lt;Step&gt;&lt;Name&gt;</span>am-set-date-header<span class="xml-tag">&lt;/Name&gt;&lt;/Step&gt;</span> <span class="xml-comment">&lt;!-- POLÍTICA: Agrega una cabecera de fecha --&gt;</span>
         <span class="xml-tag">&lt;/Response&gt;</span>
     <span class="xml-tag">&lt;/PreFlow&gt;</span>
     <span class="xml-tag">&lt;PostFlow</span> <span class="xml-attribute">name=</span><span class="xml-value">"PostFlow"</span><span class="xml-tag">&gt;</span>
