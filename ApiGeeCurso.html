@@ -1417,6 +1417,44 @@
                     </div>
                 </div>
 
+                <!-- Métodos de Creación de Proxies -->
+                <div class="mt-4 p-4 bg-white border rounded">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-gear-fill text-primary me-2"></i>¿Cómo se crea un Proxy de API?</h5>
+                    <p class="mb-3">Un proxy de API consta de un <strong>paquete de archivos de configuración XML y código</strong> (como JavaScript y Java). Apigee proporciona varias formas de crear proxies de API:</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="fw-bold text-primary mb-2"><i class="bi bi-display me-2"></i>Interfaz Gráfica (GUI)</h6>
+                                <p class="small mb-0">Usa la <strong>UI de administración de Edge</strong> para definir un proxy en una interfaz gráfica intuitiva. Es el método más común y amigable para principiantes.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-file-earmark-code me-2"></i>Archivos XML</h6>
+                                <p class="small mb-0">Creación manual de <strong>archivos XML de configuración</strong> junto con otros archivos compatibles, y luego importarlos a Edge.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="fw-bold text-info mb-2"><i class="bi bi-cloud-arrow-up me-2"></i>API de Administración</h6>
+                                <p class="small mb-0">Uso de la <strong>API de administración de Edge</strong> para crear proxies mediante solicitudes REST programáticas.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="fw-bold text-warning mb-2"><i class="bi bi-code-square me-2"></i>Aplicación Node.js</h6>
+                                <p class="small mb-0">Implementa una <strong>aplicación de Node.js</strong> como proxy independiente para casos de uso específicos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-primary mt-3 mb-0">
+                        <i class="bi bi-lightbulb me-2"></i>
+                        <strong>Recomendación:</strong> Para este curso, nos enfocaremos en el <strong>método GUI</strong> ya que es el más intuitivo y utilizado en entornos empresariales.
+                    </div>
+                </div>
+
                 <div class="p-4 rounded bg-light-blue mt-4">
                     <h5 class="fw-bold"><i class="bi bi-signpost-split-fill me-2 text-primary"></i>Pasos para Creación en Apigee Edge Clásico</h5>
                     <ol class="list-group list-group-numbered">
@@ -1460,8 +1498,76 @@
         
         <hr class="section-separator">
 
-        <!-- Módulo 2: Componentes Clave -->
-        <section id="componentes">
+        <!-- Concepto Fundamental: ¿Qué es una Política? -->
+        <section id="que-es-politica">
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">⚙️</div>
+                    <h2 class="m-0">Concepto Fundamental: ¿Qué es una Política?</h2>
+                </div>
+                
+                <div class="concept-box">
+                    <h4><i class="bi bi-gear-fill text-primary me-2"></i>Definición de Policy</h4>
+                    <p>Edge te permite controlar el comportamiento de la API mediante <strong>policies</strong> y sin escribir código. Una política es como un <strong>módulo que implementa una función de administración limitada específica</strong> como parte del flujo de solicitud/respuesta del proxy.</p>
+                </div>
+
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100 bg-light-blue">
+                            <h5 class="fw-bold"><i class="bi bi-puzzle-fill me-2 text-primary"></i>¿Cómo Funcionan?</h5>
+                            <p class="mb-3">Las políticas están diseñadas para permitirte <strong>agregar tipos comunes de capacidades de administración</strong> a una API de forma fácil y confiable.</p>
+                            <ul class="mb-0">
+                                <li><strong>Seguridad</strong> - Autenticación y autorización</li>
+                                <li><strong>Límites de frecuencia</strong> - Control de tráfico</li>
+                                <li><strong>Transformación</strong> - Modificación de datos</li>
+                                <li><strong>Mediación</strong> - Adaptación de protocolos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-4 border rounded h-100 bg-light-blue">
+                            <h5 class="fw-bold"><i class="bi bi-code-slash me-2 text-success"></i>Ventaja Principal</h5>
+                            <p class="mb-0">Las políticas proporcionan estas funciones <strong>evitando que tengas que codificar y mantener esta funcionalidad por tu cuenta</strong>. Es como tener una biblioteca de componentes pre-construidos y probados que puedes ensamblar como bloques de construcción para crear el comportamiento deseado de tu API.</p>
+                            
+                            <div class="alert alert-success mt-3 mb-0">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                <strong>Sin código = Menos errores + Mayor productividad</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-4 strategic-recommendation">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Analogía Práctica</h5>
+                    <p class="mb-3">Imagina las políticas como <strong>filtros especializados en una fábrica</strong>:</p>
+                    <div class="row g-3">
+                        <div class="col-md-4 text-center">
+                            <div class="p-3 bg-white rounded border">
+                                <i class="bi bi-shield-check fs-2 text-primary mb-2"></i>
+                                <h6>Filtro de Seguridad</h6>
+                                <small class="text-muted">Solo deja pasar solicitudes con credenciales válidas</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="p-3 bg-white rounded border">
+                                <i class="bi bi-speedometer2 fs-2 text-warning mb-2"></i>
+                                <h6>Filtro de Velocidad</h6>
+                                <small class="text-muted">Controla cuántas solicitudes pasan por minuto</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="p-3 bg-white rounded border">
+                                <i class="bi bi-arrow-left-right fs-2 text-info mb-2"></i>
+                                <h6>Filtro de Formato</h6>
+                                <small class="text-muted">Convierte datos de un formato a otro</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
             <div class="module-card">
                 <div class="module-header">
                     <div class="module-number">2</div>
